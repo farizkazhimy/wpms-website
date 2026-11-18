@@ -20,7 +20,10 @@ Astro + MDX + Content Collections (skema Zod) + Tailwind CSS. Tema Tailwind diba
 - `champagne` hanya ornamen (garis, ikon dekoratif, hitung mundur), tidak untuk teks atau status.
 - Warna status (success/warning/danger/info) hanya untuk pesan form, bukan dekorasi.
 - Proporsi halaman: ±60% latar terang, 30% primary, 10% champagne.
-- Fraunces untuk display (hero, judul artikel, nama kategori). Plus Jakarta Sans untuk UI dan isi.
+- DM Serif Display (400, satu-satunya ketebalan) untuk display: hero, judul artikel, nama kategori,
+  angka hitung mundur. Hierarki judul diatur lewat ukuran, bukan ketebalan; jangan set font-weight lain
+  (mencegah faux bold). Menggantikan Fraunces, menunggu persetujuan DS v0.3 (OD-WEB-04).
+  Plus Jakarta Sans untuk UI dan isi.
   Outfit hanya di logo SVG, jangan dimuat sebagai webfont. JetBrains Mono tidak dipakai di website.
 - Token usulan `display-xl` (48/56) dan `body-lg` (17/28) menunggu OD-WEB-04; definisikan di satu tempat
   (`src/styles/tokens.proposed.css`) agar mudah dihapus bila ditolak.

@@ -57,4 +57,4 @@ src/
 
 ## Open decisions yang memblokir
 OD-WEB-01 domain, OD-WEB-02 hosting, OD-WEB-07 editor konten (minggu 1); OD-WEB-03 form/newsletter,
-OD-WEB-04 token & komponen baru (minggu 2); OD-WEB-05 kebijakan kolaborasi berbayar (minggu 3).
+OD-WEB-04 token & komponen baru serta penggantian font display Fraunces → DM Serif Display (minggu 2); OD-WEB-05 kebijakan kolaborasi berbayar (minggu 3).
