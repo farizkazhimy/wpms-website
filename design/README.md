@@ -36,11 +36,11 @@ tetapi tidak ada nilai warna/font/spasi baru.
 \* token usulan, menunggu OD-WEB-04.
 
 ## Tipografi
-- Display: **DM Serif Display 400** (usulan pengganti Fraunces, 18 Nov 2026) untuk `display-lg` 36/44,
+- Display: **DM Serif Display 400** (pengganti Fraunces, keputusan PO RL-193, PRD v0.4.7) untuk `display-lg` 36/44,
   `display-md` 28/36; usulan `display-xl` 48/56 (hero desktop, fluid).
   Alasan: huruf J Fraunces turun di bawah garis dasar, angka DM Serif sejajar satu baris
-  (penting untuk hitung mundur H-87, tanggal, nominal). Hanya tersedia ketebalan 400.
-  Status: dipakai di website; perubahan di aplikasi menunggu OD-WEB-04 / Design System v0.3.
+  (penting untuk hitung mundur D-87, tanggal, nominal). Hanya tersedia ketebalan 400.
+  Status: berlaku di aplikasi dan website.
 - UI/isi: Plus Jakarta Sans `heading-lg` 22/30, `heading-md` 18/26, `heading-sm` 15/22, `body` 14/22,
   `label` 13/18, `caption` 12/16; usulan `body-lg` 17/28 untuk isi artikel.
 - Self-host subset Latin (woff2).
@@ -52,3 +52,8 @@ tetapi tidak ada nilai warna/font/spasi baru.
 ## Aksesibilitas
 Semua pasangan teks token sudah ≥4.5:1. Jangan menaruh teks di atas `champagne` atau `primary-bright`.
 Teks di atas foto wajib memakai `overlay`.
+
+## Catatan selaras aplikasi (PRD v0.4.7)
+- Lebar konten aplikasi maks. 1920px (PR #23) hanya untuk app shell; website tetap container 1200px dan diuji 360–1440px.
+- Mockup aplikasi di website memakai label Bahasa Inggris (RL-191) dan pemetaan tone status Design System.
+- Dokumen hasil generate memakai token `document-*` yang netral (RL-109); tidak dipakai di website.
