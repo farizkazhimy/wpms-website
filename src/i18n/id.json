@@ -2,7 +2,12 @@
   "meta": {
     "homeTitle": "WePromys — Platform manajemen project untuk Wedding Organizer",
     "homeDescription": "WePromys membantu Wedding Organizer mengelola lead, project, vendor, pembayaran, dan Client Portal dalam satu platform. Plus panduan dan inspirasi pernikahan untuk calon pengantin.",
-    "styleguideTitle": "Styleguide — WePromys Website"
+    "styleguideTitle": "Styleguide — WePromys Website",
+    "journalTitle": "Journal — Panduan pernikahan tahap demi tahap | WePromys",
+    "journalDescription": "Edukasi praktis persiapan pernikahan dari 12 bulan sebelum sampai setelah pesta: budget, venue, vendor, tamu, dan rundown, ditulis bersama tim Wedding Organizer.",
+    "inspirationTitle": "Inspirasi — Venue, palette, fotografi, dan konsep wedding | WePromys",
+    "inspirationDescription": "Kurasi editorial venue, wedding palette, fotografer, dan konsep pernikahan. Setiap profil diberi label kurasi atau kolaborasi, tanpa booking dan tanpa rating.",
+    "notFoundTitle": "Halaman tidak ditemukan | WePromys"
   },
   "a11y": {
     "skipToContent": "Lewati ke konten utama",
@@ -180,7 +185,44 @@
       "4": "3 sampai 6 bulan",
       "5": "0 sampai 3 bulan",
       "6": "Setelah pesta"
-    }
+    },
+    "eyebrow": "Journal",
+    "title": "Panduan pernikahan, tahap demi tahap",
+    "lead": "Edukasi praktis dari persiapan pertama sampai setelah pesta, ditulis bersama tim Wedding Organizer berpengalaman.",
+    "searchLabel": "Cari artikel",
+    "searchPlaceholder": "Cari topik, misalnya budget atau venue",
+    "searchSubmit": "Cari",
+    "stagesTitle": "Pilih tahap persiapan",
+    "allStages": "Semua tahap",
+    "categoriesLabel": "Kategori",
+    "categories": {
+      "all": "Semua",
+      "edukasi": "Edukasi",
+      "news": "News",
+      "checklist": "Checklist"
+    },
+    "showing": "Menampilkan {label}",
+    "showingAll": "Menampilkan semua artikel",
+    "featured": "Artikel pilihan",
+    "empty": "Belum ada artikel di bagian ini. Artikel baru terbit setelah direview tim editorial.",
+    "noResult": "Tidak ada artikel yang cocok dengan pencarian Anda.",
+    "pagination": "Halaman",
+    "prev": "Sebelumnya",
+    "next": "Berikutnya",
+    "checklistTitle": "Unduh checklist persiapan 12 bulan",
+    "checklistBody": "Gratis, dikirim ke email Anda bersama panduan bulanan.",
+    "checklistCta": "Dapatkan Checklist",
+    "home": "Beranda",
+    "writtenBy": "Ditulis oleh",
+    "reviewedBy": "Direview oleh",
+    "published": "Terbit",
+    "reviewed": "Direview",
+    "photoCredit": "Foto: {credit}",
+    "toc": "Daftar isi",
+    "forWoLabel": "Untuk Wedding Organizer",
+    "forWoBody": "Kelola jadwal, kontrak, dan pelunasan vendor Client Anda dalam satu Project di WePromys.",
+    "forWoCta": "Pelajari WePromys",
+    "related": "Lanjutkan ke tahap berikutnya"
   },
   "inspiration": {
     "categories": {
@@ -193,7 +235,44 @@
       "editorial": "Kurasi editorial",
       "collaboration": "Kolaborasi"
     },
-    "photoPlaceholder": "Foto berlisensi"
+    "photoPlaceholder": "Foto berlisensi",
+    "eyebrow": "Inspirasi",
+    "title": "Rekomendasi pilihan untuk hari bahagia Anda",
+    "lead": "Venue, palette, fotografer, dan konsep yang dikurasi tim editorial. Setiap profil diberi label agar Anda tahu mana kurasi murni dan mana kolaborasi.",
+    "sectionNav": "Kategori inspirasi",
+    "seeAll": "Lihat semua",
+    "venueFilters": "Filter venue",
+    "filter": {
+      "city": "Kota",
+      "style": "Gaya",
+      "capacity": "Kapasitas",
+      "all": "Semua"
+    },
+    "noResult": "Tidak ada venue yang cocok dengan filter.",
+    "paletteLead": "Lima warna per palette dengan kode HEX untuk dekor, busana, dan undangan.",
+    "paletteNote": "Warna palette adalah konten editorial. Kode HEX ditampilkan agar mudah disalin ke vendor.",
+    "photographyTitle": "Fotografi berdasarkan gaya",
+    "conceptTitle": "Konsep wedding",
+    "policyTitle": "Kebijakan editorial",
+    "policyBody": "Label Kurasi editorial berarti tanpa imbalan; Kolaborasi berarti ada kerja sama dengan vendor. WePromys tidak menerima booking atau pembayaran vendor di situs ini.",
+    "policyLink": "Baca Kebijakan Editorial",
+    "empty": "Belum ada profil di kategori ini. Profil terbit setelah data dan izin foto diverifikasi.",
+    "capacity": "Kapasitas",
+    "city": "Kota",
+    "style": "Gaya",
+    "price": "Kisaran harga",
+    "permission": "Izin data dan foto",
+    "gallery": "Galeri",
+    "galleryPlaceholder": "Foto {n}, dengan izin tertulis",
+    "swatchesTitle": "Warna palette",
+    "sources": "Sumber",
+    "photographyStyles": {
+      "candid": "Candid",
+      "editorial": "Editorial",
+      "dokumenter": "Dokumenter",
+      "tradisional": "Tradisional & adat"
+    },
+    "listTitle": "Daftar {label}"
   },
   "footer": {
     "groups": {
@@ -206,5 +285,10 @@
     "privacy": "Kebijakan Privasi",
     "terms": "Syarat Penggunaan",
     "socialPending": "Segera"
+  },
+  "notFound": {
+    "title": "Halaman belum tersedia",
+    "body": "Halaman yang Anda cari belum ada atau sudah dipindahkan.",
+    "cta": "Kembali ke beranda"
   }
 }

@@ -1,0 +1,150 @@
+---
+// Profil kurasi Inspirasi. Tanpa rating, tanpa booking, tanpa harga pasti (PRD 5.3).
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '~/components/Breadcrumb.astro';
+import Badge from '~/components/Badge.astro';
+import PhotoPlaceholder from '~/components/PhotoPlaceholder.astro';
+import EditorialPolicy from '~/components/inspiration/EditorialPolicy.astro';
+import { dict, fmt } from '~/i18n';
+import { site } from '~/config/site';
+import { categoryHref, type CategorySlug, type InspirationEntry } from '~/lib/inspiration';
+
+interface Props {
+  entry: InspirationEntry;
+  category: CategorySlug;
+  categoryLabel: string;
+}
+const { entry, category, categoryLabel } = Astro.props;
+const d = entry.data as Record<string, any>;
+const i = dict.inspiration;
+const facts: { label: string; value: string }[] = [];
+if (d.city) facts.push({ label: i.city, value: d.city });
+if (d.style)
+  facts.push({
+    label: i.style,
+    value: i.photographyStyles[d.style as keyof typeof i.photographyStyles] ?? d.style,
+  });
+if (d.capacity) facts.push({ label: i.capacity, value: d.capacity });
+if (d.priceRange) facts.push({ label: i.price, value: `${d.priceRange} (${d.priceCheckedAt})` });
+if (d.permissionRef) facts.push({ label: i.permission, value: d.permissionRef });
+---
+
+<BaseLayout
+  title={`${d.title} — ${categoryLabel} | ${site.productName}`}
+  description={d.description}
+  current="inspiration"
+  noindex={d.status !== 'published'}
+>
+  <article>
+    <header class="border-b border-border bg-champagne-soft">
+      <div class="mx-auto flex max-w-wide flex-col gap-space-4 px-4 pt-space-6 pb-space-6 md:px-space-5 md:pt-10">
+        <Breadcrumb
+          items={[
+            { label: dict.journal.home, href: site.routes.home },
+            { label: dict.nav.inspiration, href: '/inspirasi/' },
+            { label: categoryLabel, href: categoryHref(category) },
+            { label: d.title },
+          ]}
+        />
+        <div class="flex flex-wrap gap-space-2">
+          {d.disclosure && (
+            <Badge tone={d.disclosure === 'collaboration' ? 'brand' : 'outline'}>
+              {i.disclosure[d.disclosure as 'editorial' | 'collaboration']}
+            </Badge>
+          )}
+          {d.status === 'review' && <Badge tone="warning">{dict.journal.reviewBadge}</Badge>}
+        </div>
+        <h1 class="font-display text-display-lg md:text-display-xl">{d.title}</h1>
+        <p class="max-w-2xl text-body-lg text-ink-muted">{d.description}</p>
+      </div>
+    </header>
+
+    {d.swatches ? (
+      <section
+        aria-labelledby="swatch-title"
+        class="mx-auto max-w-wide px-4 pt-space-6 md:px-space-5"
+      >
+        <h2 id="swatch-title" class="sr-only">
+          {i.swatchesTitle}
+        </h2>
+        <ul class="grid grid-cols-2 gap-space-3 sm:grid-cols-5">
+          {d.swatches.map((s: { name: string; hex: string; role: string }) => (
+            <li class="overflow-hidden rounded-lg border border-border bg-surface">
+              <div class="h-28" style={`background:${s.hex}`} />
+              <div class="p-space-3">
+                <p class="text-body-strong">{s.name}</p>
+                <p class="font-mono text-caption text-ink-muted">
+                  {s.hex} · {s.role}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ) : (
+      <section
+        aria-labelledby="gallery-title"
+        class="mx-auto max-w-wide px-4 pt-space-6 md:px-space-5"
+      >
+        <h2 id="gallery-title" class="sr-only">
+          {i.gallery}
+        </h2>
+        <div class="grid gap-space-3 md:grid-cols-[2fr_1fr]">
+          <PhotoPlaceholder
+            label={fmt(i.galleryPlaceholder, { n: 1 })}
+            ratio="4/3"
+            class="rounded-lg"
+          />
+          <div class="grid grid-cols-2 gap-space-3 md:grid-cols-1">
+            <PhotoPlaceholder
+              label={fmt(i.galleryPlaceholder, { n: 2 })}
+              ratio="16/10"
+              class="rounded-lg"
+            />
+            <PhotoPlaceholder
+              label={fmt(i.galleryPlaceholder, { n: 3 })}
+              ratio="16/10"
+              class="rounded-lg"
+            />
+          </div>
+        </div>
+        <p class="mt-space-2 text-caption text-ink-muted">
+          {fmt(dict.journal.photoCredit, { credit: d.imageCredit })}
+        </p>
+      </section>
+    )}
+
+    <div class="mx-auto flex max-w-wide flex-wrap items-start gap-14 px-4 py-space-6 md:px-space-5 md:py-space-7">
+      <div class="min-w-0 flex-1 basis-lg">
+        <div class="prose">
+          <slot />
+        </div>
+        {d.sources && d.sources.length > 0 && (
+          <div class="mt-space-5">
+            <h2 class="text-heading-sm">{i.sources}</h2>
+            <ul class="list-disc pl-space-5 text-body">
+              {d.sources.map((u: string) => (
+                <li>
+                  <a href={u}>{u}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      {facts.length > 0 && (
+        <dl class="w-full rounded-lg border border-border bg-surface p-space-5 lg:w-80">
+          {facts.map((f) => (
+            <div class="border-b border-border py-space-3 first:pt-0 last:border-0 last:pb-0">
+              <dt class="text-label text-ink-muted">{f.label}</dt>
+              <dd class="text-body-strong">{f.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
+    <div class="mx-auto max-w-wide px-4 pb-space-7 md:px-space-5">
+      <EditorialPolicy />
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,42 @@
+---
+import Container from '../Container.astro';
+import Eyebrow from '../Eyebrow.astro';
+import { dict } from '~/i18n';
+import { categories, categoryHref, type CategorySlug } from '~/lib/inspiration';
+interface Props {
+  title: string;
+  lead: string;
+  active?: CategorySlug;
+  headingId?: string;
+}
+const { title, lead, active, headingId = 'insp-hero' } = Astro.props;
+---
+
+<section aria-labelledby={headingId} class="bg-champagne-soft">
+  <Container class="flex flex-col gap-space-4 pt-14 md:pt-16">
+    <Eyebrow>{dict.inspiration.eyebrow}</Eyebrow>
+    <h1 id={headingId} class="max-w-narrow font-display text-display-lg md:text-display-xl">
+      {title}
+    </h1>
+    <p class="max-w-2xl text-body-lg text-ink-muted">{lead}</p>
+    <nav
+      aria-label={dict.inspiration.sectionNav}
+      class="mt-space-4 flex gap-1 overflow-x-auto border-b border-border"
+    >
+      {categories.map((c) => (
+        <a
+          href={categoryHref(c.slug)}
+          aria-current={active === c.slug ? 'page' : undefined}
+          class:list={[
+            '-mb-px flex min-h-12 items-center border-b-3 px-space-5 text-heading-sm whitespace-nowrap no-underline',
+            active === c.slug
+              ? 'border-primary text-primary'
+              : 'border-transparent text-ink hover:text-primary',
+          ]}
+        >
+          {c.label}
+        </a>
+      ))}
+    </nav>
+  </Container>
+</section>

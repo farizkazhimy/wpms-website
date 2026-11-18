@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import ProfileLayout from '~/layouts/ProfileLayout.astro';
+import { getVisible } from '~/lib/content';
+import { categories } from '~/lib/inspiration';
+
+export const getStaticPaths = (async () => {
+  const paths = [];
+  for (const c of categories) {
+    const entries = await getVisible(c.collection);
+    for (const entry of entries) {
+      paths.push({ params: { category: c.slug, slug: entry.id }, props: { entry, cat: c } });
+    }
+  }
+  return paths;
+}) satisfies GetStaticPaths;
+
+const { entry, cat } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ProfileLayout entry={entry} category={cat.slug} categoryLabel={cat.label}>
+  <Content />
+</ProfileLayout>

@@ -1,0 +1,22 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import JournalListing from '~/components/JournalListing.astro';
+import { getVisible } from '~/lib/content';
+import { dict } from '~/i18n';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const articles = await getVisible('journal');
+  return paginate(articles, { pageSize: 12 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<BaseLayout
+  title={dict.meta.journalTitle}
+  description={dict.meta.journalDescription}
+  current="journal"
+>
+  <JournalListing articles={page.data} page={page} />
+</BaseLayout>

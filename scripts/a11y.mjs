@@ -2,7 +2,8 @@
 // Gagal bila ada temuan serious/critical. SCREENSHOT_DIR=... untuk menyimpan tangkapan layar.
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, readdirSync, statSync } from 'node:fs';
+import { join, relative } from 'node:path';
 
 const require = createRequire(import.meta.url);
 let chromium;
@@ -13,7 +14,17 @@ try {
 }
 const axePath = require.resolve('axe-core/axe.min.js');
 
-const routes = ['/', '/styleguide/'];
+const routes = [];
+const collect = (dir) => {
+  for (const name of readdirSync(dir)) {
+    const p = join(dir, name);
+    if (statSync(p).isDirectory()) collect(p);
+    else if (name === 'index.html')
+      routes.push('/' + relative('dist', dir).replace(/\\/g, '/') + (dir === 'dist' ? '' : '/'));
+  }
+};
+collect('dist');
+routes.sort();
 const viewports = [
   { name: 'desktop', width: 1440, height: 900 },
   { name: 'mobile', width: 360, height: 780 },
@@ -57,7 +68,7 @@ try {
       if (overflow) console.log(`  [serious] horizontal-scroll: halaman lebih lebar dari viewport`);
       failures += bad.length + (overflow ? 1 : 0);
       if (shots) {
-        const file = `${shots}/${vp.name}${route.replace(/\//g, '_') || '_'}.png`;
+        const file = `${shots}/${vp.name}${route.replace(/\//g, '_')}.png`;
         await page.screenshot({ path: file, fullPage: true });
       }
     }

@@ -3,7 +3,7 @@
 Website publik WePromys: landing produk untuk Wedding Organizer serta Journal & Inspirasi wedding
 untuk calon pengantin. Astro + MDX + Tailwind CSS v4, token dari WPMS Design System.
 
-Status: F0–F3 selesai (setup, token, komponen, Home). Berikutnya F4 template konten.
+Status: F0–F4 selesai (setup, token, komponen, Home, Journal, Artikel, Inspirasi). Berikutnya F5 konten dan halaman Produk/Untuk WO/Demo.
 
 ## Menjalankan
 
@@ -13,7 +13,7 @@ npm run dev          # http://localhost:4321 (konten status review ikut tampil d
 npm run build        # build produksi ke dist/
 npm run check        # astro check + pengawal Design System (scripts/check-design.mjs)
 npm run lint         # prettier
-npm run test:a11y    # axe-core di 1440px dan 360px, gagal bila ada temuan serious/critical
+npm run test:a11y    # axe-core di semua halaman dist/, 1440px dan 360px; gagal bila serious/critical
 ```
 
 Staging: set `PUBLIC_SHOW_REVIEW=true` agar konten berstatus `review` tampil. Produksi: `false`.

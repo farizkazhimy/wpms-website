@@ -1,0 +1,15 @@
+---
+import { dict } from '~/i18n';
+import { site } from '~/config/site';
+const i = dict.inspiration;
+---
+
+<aside
+  aria-labelledby="policy-title"
+  class="rounded-lg bg-surface-sunken px-space-5 py-space-4 text-body"
+>
+  <h2 id="policy-title" class="inline text-body-strong">
+    {i.policyTitle}:
+  </h2>
+  {i.policyBody} <a href={site.routes.editorial}>{i.policyLink}</a>
+</aside>

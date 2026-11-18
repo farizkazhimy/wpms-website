@@ -1,0 +1,33 @@
+---
+// Checklist praktis di dalam artikel; tombol unduh menjadi lead magnet newsletter.
+import Icon from '../Icon.astro';
+import Button from '../Button.astro';
+interface Props {
+  title: string;
+  items: string[];
+  downloadLabel?: string;
+  downloadHref?: string;
+}
+const { title, items, downloadLabel, downloadHref } = Astro.props;
+---
+
+<section class="not-prose my-space-5 flex flex-col gap-space-3 rounded-lg border border-border bg-surface-page p-space-5">
+  <h2 class="text-heading-md">{title}</h2>
+  <ul class="flex flex-col gap-2.5">
+    {items.map((item) => (
+      <li class="flex gap-2.5">
+        <span class="mt-0.5 text-success">
+          <Icon name="check" />
+        </span>
+        <span>{item}</span>
+      </li>
+    ))}
+  </ul>
+  {downloadLabel && downloadHref && (
+    <div>
+      <Button href={downloadHref} variant="secondary">
+        {downloadLabel}
+      </Button>
+    </div>
+  )}
+</section>

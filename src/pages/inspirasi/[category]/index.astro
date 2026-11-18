@@ -1,0 +1,55 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/Section.astro';
+import InspirationHero from '~/components/inspiration/InspirationHero.astro';
+import VenueGrid from '~/components/inspiration/VenueGrid.astro';
+import PaletteGrid from '~/components/inspiration/PaletteGrid.astro';
+import PhotoGrid from '~/components/inspiration/PhotoGrid.astro';
+import ConceptGrid from '~/components/inspiration/ConceptGrid.astro';
+import EditorialPolicy from '~/components/inspiration/EditorialPolicy.astro';
+import { getVisible } from '~/lib/content';
+import { categories } from '~/lib/inspiration';
+import { dict, fmt } from '~/i18n';
+import { site } from '~/config/site';
+
+export const getStaticPaths = (() =>
+  categories.map((c) => ({
+    params: { category: c.slug },
+    props: { cat: c },
+  }))) satisfies GetStaticPaths;
+
+const { cat } = Astro.props;
+const i = dict.inspiration;
+const venues = cat.slug === 'venue' ? await getVisible('venue') : [];
+const palettes = cat.slug === 'palette' ? await getVisible('palette') : [];
+const photos = cat.slug === 'fotografi' ? await getVisible('photography') : [];
+const concepts = cat.slug === 'konsep' ? await getVisible('concept') : [];
+const count = venues.length + palettes.length + photos.length + concepts.length;
+---
+
+<BaseLayout
+  title={`${cat.label} — ${i.eyebrow} | ${site.productName}`}
+  description={dict.meta.inspirationDescription}
+  current="inspiration"
+>
+  <InspirationHero title={cat.label} lead={i.lead} active={cat.slug} />
+  <Section labelledby="list-title">
+    <h2 id="list-title" class="sr-only">
+      {fmt(i.listTitle, { label: cat.label })}
+    </h2>
+    {count === 0 && <p class="text-ink-muted">{i.empty}</p>}
+    {venues.length > 0 && <VenueGrid venues={venues} />}
+    {palettes.length > 0 && (
+      <>
+        <PaletteGrid items={palettes} />
+        <p class="mt-space-4 text-caption text-ink-muted">{i.paletteNote}</p>
+      </>
+    )}
+    {photos.length > 0 && <PhotoGrid items={photos} />}
+    {concepts.length > 0 && <ConceptGrid items={concepts} />}
+    <div class="mt-space-6">
+      <EditorialPolicy />
+    </div>
+  </Section>
+</BaseLayout>

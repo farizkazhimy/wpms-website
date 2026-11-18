@@ -61,13 +61,15 @@ OD-WEB-04 token `display-xl`, `body-lg`, dan 6 komponen baru (minggu 2; font dis
 
 ## Status (18 Nov 2026)
 
+Konten contoh: 3 artikel + 16 profil Inspirasi berstatus `review` dengan `[VERIFIKASI]`; tampil hanya di staging.
+
 | Fase | Status | Catatan |
 | --- | --- | --- |
 | F0 Setup | Selesai | Astro 7.4.5, MDX, Tailwind 4.3.4, Content Collections, CI GitHub Actions |
 | F1 Token & brand | Selesai | Tema dari tokens.json, font self-host, logo, `/styleguide` |
 | F2 Komponen | Selesai | 15 komponen; check-design dan axe lulus |
 | F3 Landing | Home selesai | Halaman Produk, Untuk WO, Ajukan Demo, Tentang menyusul (belum ada mockup) |
-| F4 Template konten | Berikutnya | Journal, Artikel, Inspirasi sesuai mockup 02–04 |
+| F4 Template konten | Selesai | Journal (indeks, filter tahap `/journal/tahap/N/`, kategori, pencarian klien, pagination 12), Artikel (TOC, blok Untuk WO, terkait), Inspirasi (indeks, 4 kategori, profil), 404 |
 
 Catatan desain: di mobile (< 768px) label kategori Inspirasi memakai scrim `ink` 80% karena token
 `overlay` (48%) hanya memberi kontras ±3,4:1 untuk teks 18px. Usulan untuk Design System v0.3.

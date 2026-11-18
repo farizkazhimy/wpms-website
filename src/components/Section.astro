@@ -7,9 +7,18 @@ interface Props {
   width?: 'site' | 'wide' | 'article' | 'narrow';
   id?: string;
   labelledby?: string;
+  compact?: boolean;
   class?: string;
 }
-const { tone = 'page', bordered = false, width = 'site', id, labelledby, class: cls } = Astro.props;
+const {
+  tone = 'page',
+  bordered = false,
+  width = 'site',
+  compact = false,
+  id,
+  labelledby,
+  class: cls,
+} = Astro.props;
 const bg = {
   page: 'bg-surface-page',
   surface: 'bg-surface',
@@ -23,7 +32,7 @@ const bg = {
   aria-labelledby={labelledby}
   class:list={[bg, bordered && 'border-y border-border', cls]}
 >
-  <Container width={width} class="py-space-7 md:py-section">
+  <Container width={width} class={compact ? 'py-space-6 md:py-10' : 'py-space-7 md:py-section'}>
     <slot />
   </Container>
 </section>

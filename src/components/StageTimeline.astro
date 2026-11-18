@@ -15,7 +15,7 @@ const stages = ['1', '2', '3', '4', '5', '6'] as const;
     return (
       <li>
         <a
-          href={`${baseHref}?tahap=${s}`}
+          href={`${baseHref}/tahap/${s}/`}
           aria-current={on ? 'true' : undefined}
           class:list={[
             'flex min-h-28 flex-col gap-1.5 rounded-lg p-space-4 text-ink no-underline hover:text-ink',

@@ -14,13 +14,10 @@ import { site } from '~/config/site';
 import { dict, fmt } from '~/i18n';
 import { getVisible } from '~/lib/content';
 import { inspirationCategories } from '~/data/inspiration';
+import { stageLabel, journalHref } from '~/lib/journal';
 
 const h = dict.home;
 const articles = (await getVisible('journal')).slice(0, 3);
-const stageLabel = (stage: string) =>
-  stage === 'news'
-    ? dict.journal.stages.news
-    : `${fmt(dict.journal.stage, { n: stage })} · ${dict.journal.stages[stage as keyof typeof dict.journal.stages]}`;
 const photoLabel = {
   venue: 'Foto venue',
   palette: '',
@@ -168,7 +165,7 @@ const photoLabel = {
       <div class="grid gap-space-5 md:grid-cols-3">
         {articles.map((a) => (
           <ArticleCard
-            href={`${site.routes.journal}/${a.id}`}
+            href={journalHref(a.id)}
             title={a.data.title}
             stageLabel={stageLabel(a.data.stage)}
             readingMinutes={a.data.readingMinutes}
