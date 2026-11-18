@@ -1,0 +1,59 @@
+---
+// Ilustrasi Project Workspace (bukan screenshot). Label mengikuti aplikasi: Bahasa Inggris (PRD RL-191).
+import Badge from './Badge.astro';
+import { dict } from '~/i18n';
+const m = dict.home.mockup;
+type Tone = 'success' | 'info' | 'warning';
+---
+
+<figure class="m-0">
+  <div
+    role="img"
+    aria-label={m.label}
+    class="flex min-h-96 overflow-hidden rounded-lg border border-border bg-surface shadow-lg"
+  >
+    <div
+      class="hidden w-36 shrink-0 flex-col gap-1.5 border-r border-border px-space-3 py-space-4 text-caption sm:flex"
+      aria-hidden="true"
+    >
+      <span class="mb-space-3 h-2.5 w-16 rounded-pill bg-primary-soft-strong"></span>
+      {m.menu.map((item) => (
+        <span
+          class:list={[
+            'rounded-md px-space-2 py-1.5',
+            item === m.activeMenu ? 'bg-primary-soft font-semibold text-primary' : 'text-ink-muted',
+          ]}
+        >
+          {item}
+        </span>
+      ))}
+    </div>
+    <div class="flex min-w-0 flex-1 flex-col gap-3.5 bg-surface-page p-space-5" aria-hidden="true">
+      <div class="flex flex-wrap items-start justify-between gap-space-3">
+        <div>
+          <div class="font-display text-heading-lg font-normal">{m.couple}</div>
+          <div class="text-caption text-ink-muted">{m.event}</div>
+        </div>
+        <Badge tone="info">{m.status}</Badge>
+      </div>
+      <div class="flex items-center gap-3.5 rounded-lg bg-champagne-soft px-space-4 py-3.5">
+        <span class="size-2.5 rotate-45 rounded-sm bg-champagne"></span>
+        <span class="font-display text-display-md tabular-nums">{m.countdown}</span>
+        <span class="text-caption">{m.countdownLabel}</span>
+      </div>
+      <div class="overflow-hidden rounded-lg border border-border bg-surface text-caption">
+        <div class="flex justify-between bg-surface-sunken px-space-3 py-space-2 text-ink-muted">
+          <span>{m.taskHeader}</span>
+          <span>{m.statusHeader}</span>
+        </div>
+        {m.tasks.map((t) => (
+          <div class="flex items-center justify-between gap-space-2 border-t border-border px-space-3 py-2.5">
+            <span>{t.name}</span>
+            <Badge tone={t.tone as Tone}>{t.status}</Badge>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+  <figcaption class="mt-space-2 text-right text-caption text-ink-muted">{m.caption}</figcaption>
+</figure>

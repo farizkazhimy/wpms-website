@@ -1,0 +1,20 @@
+---
+// Label kecil di atas judul dengan garis ornamen champagne (ornamen, bukan teks berwarna).
+interface Props {
+  onPrimary?: boolean;
+  line?: boolean;
+}
+const { onPrimary = false, line = true } = Astro.props;
+---
+
+<div class="flex items-center gap-space-3">
+  {line && <span aria-hidden="true" class="h-0.5 w-10 bg-champagne" />}
+  <span
+    class:list={[
+      'text-label tracking-[0.08em] uppercase',
+      onPrimary ? 'text-champagne-soft' : 'text-ink-muted',
+    ]}
+  >
+    <slot />
+  </span>
+</div>

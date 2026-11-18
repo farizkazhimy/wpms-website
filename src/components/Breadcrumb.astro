@@ -1,0 +1,22 @@
+---
+import { dict } from '~/i18n';
+interface Props {
+  items: { label: string; href?: string }[];
+}
+const { items } = Astro.props;
+---
+
+<nav aria-label={dict.a11y.breadcrumb} class="text-label text-ink-muted">
+  <ol class="flex flex-wrap gap-1">
+    {items.map((item, i) => (
+      <li class="flex gap-1">
+        {item.href ? (
+          <a href={item.href}>{item.label}</a>
+        ) : (
+          <span aria-current="page">{item.label}</span>
+        )}
+        {i < items.length - 1 && <span aria-hidden="true">/</span>}
+      </li>
+    ))}
+  </ol>
+</nav>

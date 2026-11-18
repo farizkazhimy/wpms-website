@@ -1,0 +1,82 @@
+@import 'tailwindcss';
+@import './tokens.generated.css';
+@import './tokens.proposed.css';
+@import './site.css';
+
+/* Font di-host sendiri (fontsource): DM Serif Display 400 untuk display, Plus Jakarta Sans untuk UI. */
+@import '@fontsource/dm-serif-display/latin-400.css';
+@import '@fontsource-variable/plus-jakarta-sans/wght.css';
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: var(--spacing-header);
+  }
+  body {
+    @apply bg-surface-page font-sans text-ink antialiased;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-primary-bright);
+    outline-offset: 2px;
+  }
+  a {
+    @apply text-primary underline decoration-1 underline-offset-2;
+  }
+  a:hover {
+    @apply text-primary-hover;
+  }
+  /* Angka sejajar dan selebar sama untuk hitung mundur, tanggal, nominal. */
+  .font-display {
+    font-variant-numeric: lining-nums;
+  }
+}
+
+@layer utilities {
+  .sr-only-focusable:not(:focus) {
+    @apply sr-only;
+  }
+}
+
+/* Isi artikel dan profil (MDX). Semua nilai dari token. */
+@layer components {
+  .prose {
+    @apply text-body-lg text-ink;
+    max-width: var(--container-prose);
+  }
+  .prose :where(p, ul, ol, table, figure):not(:where(.not-prose *)) {
+    @apply my-space-4;
+  }
+  .prose :where(h2):not(:where(.not-prose *)) {
+    @apply mt-space-6 mb-space-3 scroll-mt-24 text-heading-lg md:font-sans md:text-display-md md:font-bold;
+  }
+  .prose :where(h3):not(:where(.not-prose *)) {
+    @apply mt-space-5 mb-space-2 scroll-mt-24 text-heading-md;
+  }
+  .prose :where(ul):not(:where(.not-prose *)) {
+    @apply list-disc pl-space-5;
+  }
+  .prose :where(ol):not(:where(.not-prose *)) {
+    @apply list-decimal pl-space-5;
+  }
+  .prose :where(li):not(:where(.not-prose *)) {
+    @apply my-space-1;
+  }
+  .prose :where(strong):not(:where(.not-prose *)) {
+    @apply font-semibold;
+  }
+  .prose th {
+    @apply bg-surface-sunken px-space-3 py-2.5 text-left text-label text-ink-muted;
+  }
+  .prose td {
+    @apply border-t border-border px-space-3 py-2.5 align-top;
+  }
+  .prose td:first-child {
+    @apply font-semibold;
+  }
+}

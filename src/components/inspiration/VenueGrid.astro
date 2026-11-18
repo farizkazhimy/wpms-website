@@ -1,0 +1,77 @@
+---
+import VendorCard from '../VendorCard.astro';
+import { dict } from '~/i18n';
+import { profileHref } from '~/lib/inspiration';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  venues: CollectionEntry<'venue'>[];
+  filters?: boolean;
+}
+const { venues, filters = true } = Astro.props;
+const f = dict.inspiration.filter;
+const unique = (xs: string[]) => [...new Set(xs)].sort();
+const options = {
+  city: unique(venues.map((v) => v.data.city)),
+  style: unique(venues.map((v) => v.data.style)),
+};
+---
+
+<div class="flex flex-col gap-space-5" data-venue-grid>
+  {filters && venues.length > 1 && (
+    <form class="flex flex-wrap gap-space-3" aria-label={dict.inspiration.venueFilters}>
+      {(['city', 'style'] as const).map((key) => (
+        <div class="flex flex-col gap-1">
+          <label for={`f-${key}`} class="text-label">
+            {f[key]}
+          </label>
+          <select
+            id={`f-${key}`}
+            data-venue-filter={key}
+            class="min-h-11 min-w-40 rounded-md border border-border-control bg-surface px-space-3 text-body text-ink"
+          >
+            <option value="">{f.all}</option>
+            {options[key].map((o) => (
+              <option value={o}>{o}</option>
+            ))}
+          </select>
+        </div>
+      ))}
+    </form>
+  )}
+  <ul class="grid gap-space-5 sm:grid-cols-2 lg:grid-cols-4">
+    {venues.map((v) => (
+      <li class="flex" data-city={v.data.city} data-style={v.data.style}>
+        <VendorCard
+          href={profileHref('venue', v.id)}
+          name={v.data.title}
+          meta={`${v.data.city} · ${v.data.capacity}`}
+          price={v.data.priceRange}
+          priceCheckedAt={v.data.priceCheckedAt}
+          disclosure={v.data.disclosure}
+        />
+      </li>
+    ))}
+  </ul>
+  <p class="text-ink-muted" data-venue-empty hidden>
+    {dict.inspiration.noResult}
+  </p>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-venue-grid]').forEach((root) => {
+    const selects = [...root.querySelectorAll<HTMLSelectElement>('[data-venue-filter]')];
+    const items = [...root.querySelectorAll<HTMLElement>('li[data-city]')];
+    const empty = root.querySelector<HTMLElement>('[data-venue-empty]');
+    const apply = () => {
+      let shown = 0;
+      items.forEach((li) => {
+        const ok = selects.every((s) => !s.value || li.dataset[s.dataset.venueFilter!] === s.value);
+        li.hidden = !ok;
+        if (ok) shown++;
+      });
+      if (empty) empty.hidden = shown > 0;
+    };
+    selects.forEach((s) => s.addEventListener('change', apply));
+  });
+</script>

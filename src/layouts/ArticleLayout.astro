@@ -1,0 +1,153 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { MarkdownHeading } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '~/components/Breadcrumb.astro';
+import Badge from '~/components/Badge.astro';
+import PhotoPlaceholder from '~/components/PhotoPlaceholder.astro';
+import { dict, fmt } from '~/i18n';
+import { site } from '~/config/site';
+import { stageLabel, journalHref } from '~/lib/journal';
+
+interface Props {
+  entry: CollectionEntry<'journal'>;
+  headings: MarkdownHeading[];
+  related: CollectionEntry<'journal'>[];
+}
+const { entry, headings, related } = Astro.props;
+const d = entry.data;
+const j = dict.journal;
+const toc = headings.filter((h) => h.depth === 2);
+const dateFmt = new Intl.DateTimeFormat('id-ID', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'Asia/Jakarta',
+});
+const stageName = d.stage === 'news' ? j.stages.news : j.stages[d.stage];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: d.title,
+  description: d.description,
+  datePublished: d.publishedAt.toISOString(),
+  dateModified: d.reviewedAt.toISOString(),
+  author: { '@type': 'Organization', name: site.productName },
+  publisher: { '@type': 'Organization', name: site.productName },
+};
+---
+
+<BaseLayout
+  title={`${d.title} | ${site.productName}`}
+  description={d.description}
+  current="journal"
+  noindex={d.status !== 'published'}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <article>
+    <header class="border-b border-border bg-surface-page">
+      <div class="mx-auto flex max-w-article flex-col gap-space-4 px-4 pt-space-6 pb-space-6 md:px-space-5 md:pt-10 md:pb-space-7">
+        <Breadcrumb
+          items={[
+            { label: j.home, href: site.routes.home },
+            { label: dict.nav.journal, href: '/journal/' },
+            {
+              label: stageName,
+              href: d.stage === 'news' ? undefined : `/journal/tahap/${d.stage}/`,
+            },
+          ]}
+        />
+        <div class="flex flex-wrap gap-space-2">
+          <Badge>{stageLabel(d.stage)}</Badge>
+          {d.status === 'review' && <Badge tone="warning">{j.reviewBadge}</Badge>}
+        </div>
+        <h1 class="font-display text-display-lg md:text-display-xl">{d.title}</h1>
+        <p class="text-body-lg text-ink-muted">{d.description}</p>
+        <div class="flex flex-wrap gap-x-space-5 gap-y-space-2 text-label text-ink-muted">
+          <span>
+            {j.writtenBy} <strong class="text-ink">{d.author}</strong>
+          </span>
+          <span>
+            {j.reviewedBy} <strong class="text-ink">{d.reviewer}</strong>
+          </span>
+          <span>
+            {j.published} {dateFmt.format(d.publishedAt)} · {j.reviewed}{' '}
+            {dateFmt.format(d.reviewedAt)}
+          </span>
+          <span>{fmt(j.readingTime, { n: d.readingMinutes })}</span>
+        </div>
+      </div>
+    </header>
+
+    <figure class="mx-auto mt-space-6 max-w-wide px-4 md:mt-10 md:px-space-5">
+      <PhotoPlaceholder label={d.heroAlt} ratio="21/9" class="rounded-lg" />
+      <figcaption class="mt-space-2 text-caption text-ink-muted">
+        {fmt(j.photoCredit, { credit: d.imageCredit })}
+      </figcaption>
+    </figure>
+
+    <div class="mx-auto flex max-w-wide flex-wrap items-start gap-14 px-4 py-space-6 md:px-space-5 md:py-space-7">
+      {toc.length > 0 && (
+        <nav
+          aria-labelledby="toc-title"
+          class="flex w-full flex-col gap-2.5 border-t-2 border-champagne pt-space-4 text-body lg:sticky lg:top-24 lg:w-60"
+        >
+          <h2 id="toc-title" class="text-label tracking-[0.06em] text-ink-muted uppercase">
+            {j.toc}
+          </h2>
+          <ol class="flex flex-col gap-2.5">
+            {toc.map((h, i) => (
+              <li>
+                <a href={`#${h.slug}`} class="text-ink no-underline hover:text-primary">
+                  {i + 1}. {h.text}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <div class="min-w-0 flex-1 basis-lg">
+        <div class="prose">
+          <slot />
+        </div>
+        <aside
+          aria-labelledby="for-wo"
+          class="mt-space-6 flex max-w-prose flex-wrap items-center justify-between gap-space-4 rounded-lg bg-surface-sunken p-space-5"
+        >
+          <div class="flex-1 basis-72">
+            <h2 id="for-wo" class="mb-1 text-label tracking-[0.06em] text-ink-muted uppercase">
+              {j.forWoLabel}
+            </h2>
+            <p class="text-body">{j.forWoBody}</p>
+          </div>
+          <a href={site.routes.product} class="text-body-strong">
+            {j.forWoCta}
+          </a>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  {related.length > 0 && (
+    <section aria-labelledby="related-title" class="bg-champagne-soft">
+      <div class="mx-auto flex max-w-wide flex-col gap-space-5 px-4 py-space-7 md:px-space-5">
+        <h2 id="related-title" class="font-display text-display-md">
+          {j.related}
+        </h2>
+        <ul class="grid gap-space-4 md:grid-cols-3">
+          {related.map((r) => (
+            <li class="flex">
+              <a
+                href={journalHref(r.id)}
+                class="flex w-full flex-col gap-1.5 rounded-lg border border-border bg-surface p-space-5 text-ink no-underline hover:text-ink"
+              >
+                <span class="text-caption text-ink-muted">{stageLabel(r.data.stage)}</span>
+                <strong class="font-display text-heading-lg font-normal">{r.data.title}</strong>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+</BaseLayout>

@@ -1,0 +1,43 @@
+---
+// Kartu kategori Inspirasi. Teks di atas foto selalu memakai scrim `overlay`.
+interface Props {
+  href: string;
+  title: string;
+  placeholder?: string;
+  swatches?: string[];
+  compact?: boolean;
+}
+const { href, title, placeholder, swatches, compact = false } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    'relative flex flex-col overflow-hidden rounded-lg no-underline',
+    compact ? 'aspect-square' : 'aspect-[4/5]',
+    swatches ? 'bg-champagne-soft' : 'bg-surface-sunken',
+  ]}
+>
+  {swatches ? (
+    <span class="grid flex-1 grid-cols-5" aria-hidden="true">
+      {swatches.map((hex) => (
+        <span style={`background:${hex}`} />
+      ))}
+    </span>
+  ) : (
+    <span class="absolute top-space-4 left-space-4 text-caption text-ink-muted">
+      [{placeholder}]
+    </span>
+  )}
+  <span
+    class:list={[
+      'bg-ink/80 font-display text-on-primary md:bg-overlay',
+      swatches ? '' : 'absolute inset-x-0 bottom-0',
+      compact
+        ? 'p-space-3 text-heading-md font-normal'
+        : 'p-space-3 text-heading-md font-normal md:p-space-5 md:text-display-md',
+    ]}
+  >
+    {title}
+  </span>
+</a>

@@ -1,0 +1,22 @@
+---
+import PaletteSwatch from '../PaletteSwatch.astro';
+import { profileHref } from '~/lib/inspiration';
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+  items: CollectionEntry<'palette'>[];
+}
+const { items } = Astro.props;
+---
+
+<ul class="grid gap-space-5 sm:grid-cols-2 lg:grid-cols-4">
+  {items.map((p) => (
+    <li class="flex">
+      <PaletteSwatch
+        href={profileHref('palette', p.id)}
+        name={p.data.title}
+        mood={p.data.mood}
+        swatches={p.data.swatches}
+      />
+    </li>
+  ))}
+</ul>

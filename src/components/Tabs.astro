@@ -1,0 +1,61 @@
+---
+// Tabs (w-tab) dengan pola WAI-ARIA; panel diisi lewat slot bernama panel-0, panel-1, dst.
+interface Props {
+  id: string;
+  labels: string[];
+  label: string;
+}
+const { id, labels, label } = Astro.props;
+---
+
+<div data-tabs={id}>
+  <div role="tablist" aria-label={label} class="flex gap-1 overflow-x-auto border-b border-border">
+    {labels.map((l, i) => (
+      <button
+        type="button"
+        role="tab"
+        id={`${id}-tab-${i}`}
+        aria-controls={`${id}-panel-${i}`}
+        aria-selected={i === 0 ? 'true' : 'false'}
+        tabindex={i === 0 ? 0 : -1}
+        class="-mb-px min-h-11 border-b-2 border-transparent px-space-4 text-body-strong whitespace-nowrap text-ink-muted aria-selected:border-primary aria-selected:text-primary"
+      >
+        {l}
+      </button>
+    ))}
+  </div>
+  {labels.map((_, i) => (
+    <div
+      role="tabpanel"
+      id={`${id}-panel-${i}`}
+      aria-labelledby={`${id}-tab-${i}`}
+      hidden={i !== 0}
+      class="pt-space-5"
+    >
+      <slot name={`panel-${i}`} />
+    </div>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const select = (next: HTMLButtonElement) => {
+      tabs.forEach((t) => {
+        const on = t === next;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = document.getElementById(t.getAttribute('aria-controls')!);
+        if (panel) panel.hidden = !on;
+      });
+      next.focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') select(tabs[(i + 1) % tabs.length]);
+        if (e.key === 'ArrowLeft') select(tabs[(i - 1 + tabs.length) % tabs.length]);
+      });
+    });
+  });
+</script>

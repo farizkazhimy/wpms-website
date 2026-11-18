@@ -1,0 +1,262 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/Section.astro';
+import Container from '~/components/Container.astro';
+import Eyebrow from '~/components/Eyebrow.astro';
+import Button from '~/components/Button.astro';
+import Icon from '~/components/Icon.astro';
+import AppMockup from '~/components/AppMockup.astro';
+import FeatureCard from '~/components/FeatureCard.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import ArticleCard from '~/components/ArticleCard.astro';
+import CategoryCard from '~/components/CategoryCard.astro';
+import { site } from '~/config/site';
+import { dict, fmt } from '~/i18n';
+import { getVisible } from '~/lib/content';
+import { inspirationCategories } from '~/data/inspiration';
+import { stageLabel, journalHref } from '~/lib/journal';
+
+const h = dict.home;
+const articles = (await getVisible('journal')).slice(0, 3);
+const photoLabel = {
+  venue: 'Foto venue',
+  palette: '',
+  photography: 'Foto karya fotografer',
+  concept: 'Foto konsep dekor',
+} as const;
+---
+
+<BaseLayout title={dict.meta.homeTitle} description={dict.meta.homeDescription}>
+  <!-- Hero (jalur WO) -->
+  <section aria-labelledby="hero-title" class="bg-surface-page">
+    <Container class="flex flex-wrap items-center gap-14 pt-space-7 pb-space-6 md:pt-20 md:pb-section">
+      <div class="flex min-w-0 flex-1 basis-md flex-col gap-space-5">
+        <Eyebrow>{h.hero.eyebrow}</Eyebrow>
+        <h1 id="hero-title" class="font-display text-display-lg md:text-display-xl">
+          {h.hero.title}
+        </h1>
+        <p class="max-w-lg text-body-lg text-ink-muted">{h.hero.lead}</p>
+        <div class="flex flex-wrap gap-space-3">
+          <Button href={site.routes.demo} size="lg">
+            {h.hero.ctaPrimary}
+          </Button>
+          <Button href={site.routes.product} size="lg" variant="secondary">
+            {h.hero.ctaSecondary}
+          </Button>
+        </div>
+        <p class="text-label text-ink-muted">{h.hero.note}</p>
+      </div>
+      <div class="min-w-0 flex-1 basis-lg">
+        <AppMockup />
+      </div>
+    </Container>
+  </section>
+
+  <!-- Masalah WO -->
+  <Section tone="surface" bordered labelledby="problems-title">
+    <div class="mb-space-6 max-w-2xl">
+      <h2
+        id="problems-title"
+        class="mb-space-2 text-heading-lg md:font-sans md:text-display-md md:font-bold"
+      >
+        {h.problems.title}
+      </h2>
+      <p class="text-ink-muted">{h.problems.lead}</p>
+    </div>
+    <div class="grid gap-space-5 md:grid-cols-3">
+      {h.problems.items.map((p) => (
+        <article class="flex flex-col gap-2.5 rounded-lg border border-border bg-surface-page p-space-5">
+          <span class="text-primary">
+            <Icon name={p.icon as 'list' | 'clock' | 'wallet'} size={24} />
+          </span>
+          <h3 class="text-heading-md">{p.title}</h3>
+          <p class="text-ink-muted">{p.body}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Fitur inti -->
+  <Section labelledby="features-title">
+    <div class="mb-space-6 flex flex-wrap items-end justify-between gap-space-4">
+      <div class="max-w-xl">
+        <h2
+          id="features-title"
+          class="mb-space-2 text-heading-lg md:font-sans md:text-display-md md:font-bold"
+        >
+          {h.features.title}
+        </h2>
+        <p class="text-ink-muted">{h.features.lead}</p>
+      </div>
+      <a href={site.routes.product} class="text-body-strong">
+        {h.features.more}
+      </a>
+    </div>
+    <div class="grid gap-space-5 sm:grid-cols-2 lg:grid-cols-5">
+      {h.features.items.map((f) => (
+        <FeatureCard
+          name={f.name}
+          body={f.body}
+          screenshotLabel={fmt(h.features.screenshot, { name: f.name })}
+        />
+      ))}
+    </div>
+  </Section>
+
+  <!-- Cara kerja -->
+  <Section tone="surface" labelledby="steps-title" class="border-t border-border">
+    <h2
+      id="steps-title"
+      class="mb-space-6 text-heading-lg md:font-sans md:text-display-md md:font-bold"
+    >
+      {h.steps.title}
+    </h2>
+    <ol class="grid gap-space-5 sm:grid-cols-2 lg:grid-cols-4">
+      {h.steps.items.map((s, i) => {
+        const last = i === h.steps.items.length - 1;
+        return (
+          <li
+            class:list={[
+              'flex flex-col gap-space-2 border-t-2 pt-space-4',
+              last ? 'border-champagne' : 'border-primary',
+            ]}
+          >
+            <span
+              class:list={['text-label font-semibold', last ? 'text-ink-muted' : 'text-primary']}
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <strong class="text-heading-sm">{s.name}</strong>
+            <span class="text-body text-ink-muted">{s.body}</span>
+          </li>
+        );
+      })}
+    </ol>
+  </Section>
+
+  <!-- Program Pilot -->
+  <Section tone="primary" labelledby="pilot-title">
+    <CTABanner
+      id="pilot-title"
+      eyebrow={h.pilot.eyebrow}
+      title={h.pilot.title}
+      body={h.pilot.body}
+      cta={h.pilot.cta}
+      href={site.routes.pilot}
+    />
+  </Section>
+
+  <!-- Jalur pasangan: Journal -->
+  <Section tone="champagne" labelledby="journal-title">
+    <div class="mb-space-6 flex flex-wrap items-end justify-between gap-space-4">
+      <div>
+        <div class="mb-space-2">
+          <Eyebrow>{h.journal.eyebrow}</Eyebrow>
+        </div>
+        <h2 id="journal-title" class="font-display text-display-md md:text-display-lg">
+          {h.journal.title}
+        </h2>
+      </div>
+      <a href={site.routes.journal} class="text-body-strong">
+        {h.journal.more}
+      </a>
+    </div>
+    {articles.length > 0 ? (
+      <div class="grid gap-space-5 md:grid-cols-3">
+        {articles.map((a) => (
+          <ArticleCard
+            href={journalHref(a.id)}
+            title={a.data.title}
+            stageLabel={stageLabel(a.data.stage)}
+            readingMinutes={a.data.readingMinutes}
+            status={a.data.status}
+            tone={a.data.stage === 'news' ? 'neutral' : 'brand'}
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="text-ink-muted">{h.journal.empty}</p>
+    )}
+  </Section>
+
+  <!-- Inspirasi -->
+  <Section labelledby="inspiration-title">
+    <div class="mb-space-6 flex flex-wrap items-end justify-between gap-space-4">
+      <h2 id="inspiration-title" class="font-display text-display-md md:text-display-lg">
+        {h.inspiration.title}
+      </h2>
+      <a href={site.routes.inspiration} class="text-body-strong">
+        {h.inspiration.more}
+      </a>
+    </div>
+    <div class="grid grid-cols-2 gap-space-3 md:gap-space-5 lg:grid-cols-4">
+      {inspirationCategories.map((c) => (
+        <CategoryCard
+          href={c.href}
+          title={dict.inspiration.categories[c.key]}
+          swatches={c.swatches}
+          placeholder={photoLabel[c.key]}
+        />
+      ))}
+    </div>
+  </Section>
+
+  <!-- Newsletter -->
+  <Section
+    tone="surface"
+    width="narrow"
+    labelledby="newsletter-title"
+    class="border-t border-border"
+  >
+    <div class="flex flex-col items-center gap-space-5 text-center">
+      <h2
+        id="newsletter-title"
+        class="text-heading-lg md:font-sans md:text-display-md md:font-bold"
+      >
+        {h.newsletter.title}
+      </h2>
+      <p class="text-ink-muted">{h.newsletter.lead}</p>
+      <form class="flex w-full max-w-lg flex-col gap-space-4 text-left" data-newsletter>
+        <fieldset class="flex flex-wrap justify-center gap-space-2">
+          <legend class="sr-only">{h.newsletter.segmentLegend}</legend>
+          {h.newsletter.segments.map((s, i) => (
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="segmen"
+                value={i === 0 ? 'wo' : 'pasangan'}
+                checked={i === 1}
+                class="peer sr-only"
+              />
+              <span class="flex min-h-11 items-center rounded-pill border border-border-control bg-surface px-4.5 text-body-strong text-ink peer-checked:border-primary peer-checked:bg-primary-soft peer-checked:text-primary peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary-bright">
+                {s}
+              </span>
+            </label>
+          ))}
+        </fieldset>
+        <div class="flex flex-wrap items-end gap-space-3">
+          <div class="flex min-w-0 flex-1 basis-64 flex-col gap-1.5">
+            <label for="nl-email" class="text-label">
+              {h.newsletter.emailLabel}
+            </label>
+            <input
+              id="nl-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder={h.newsletter.emailPlaceholder}
+              class="min-h-11 rounded-md border border-border-control bg-surface px-space-3 text-body text-ink placeholder:text-ink-muted"
+            />
+          </div>
+          <Button type="submit" disabled aria-describedby="nl-pending">
+            {h.newsletter.submit}
+          </Button>
+        </div>
+        <p class="text-caption text-ink-muted">{h.newsletter.consent}</p>
+        <p id="nl-pending" class="text-caption text-ink-muted">
+          {h.newsletter.pending}
+        </p>
+      </form>
+    </div>
+  </Section>
+</BaseLayout>

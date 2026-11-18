@@ -1,0 +1,17 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/Section.astro';
+import Button from '~/components/Button.astro';
+import { dict } from '~/i18n';
+import { site } from '~/config/site';
+---
+
+<BaseLayout title={dict.meta.notFoundTitle} description={dict.notFound.body} noindex>
+  <Section width="narrow">
+    <div class="flex flex-col items-start gap-space-4 py-space-7">
+      <h1 class="font-display text-display-lg">{dict.notFound.title}</h1>
+      <p class="text-body-lg text-ink-muted">{dict.notFound.body}</p>
+      <Button href={site.routes.home}>{dict.notFound.cta}</Button>
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,59 @@
+---
+import '~/styles/global.css';
+import SiteHeader from '~/components/SiteHeader.astro';
+import SiteFooter from '~/components/SiteFooter.astro';
+import MobileCTA from '~/components/MobileCTA.astro';
+import { site } from '~/config/site';
+import { dict } from '~/i18n';
+import tokens from '../../design/tokens.json';
+
+interface Props {
+  title: string;
+  description: string;
+  current?: 'product' | 'forWo' | 'journal' | 'inspiration' | 'about';
+  noindex?: boolean;
+  mobileCta?: boolean;
+}
+const { title, description, current, noindex = false, mobileCta = true } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const themeColor = tokens.color.tokens.find((t) => t.name === 'primary')?.value;
+const ogImage = new URL('/brand/wepromys-app-icon.png', Astro.site);
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/brand/wepromys-app-icon.png" />
+    <meta name="theme-color" content={themeColor} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.productName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="id_ID" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <a
+      href="#konten"
+      class="sr-only-focusable fixed top-space-2 left-space-2 z-50 rounded-md bg-surface px-space-4 py-space-2 text-body-strong shadow-md"
+    >
+      {dict.a11y.skipToContent}
+    </a>
+    <SiteHeader current={current} />
+    <main id="konten">
+      <slot />
+    </main>
+    <SiteFooter />
+    {mobileCta && <MobileCTA />}
+  </body>
+</html>

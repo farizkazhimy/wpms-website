@@ -1,0 +1,15 @@
+---
+// Aksi utama menjadi tombol penuh di bawah layar pada mobile (pola Design System < 768px).
+import Button from './Button.astro';
+import { site } from '~/config/site';
+import { dict } from '~/i18n';
+---
+
+<aside
+  aria-label={dict.a11y.mobileCta}
+  class="sticky bottom-0 z-30 border-t border-border bg-surface px-4 py-space-3 shadow-md md:hidden"
+>
+  <Button href={site.routes.demo} size="lg" full>
+    {dict.nav.demo}
+  </Button>
+</aside>

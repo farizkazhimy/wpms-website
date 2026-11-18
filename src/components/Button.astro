@@ -1,0 +1,42 @@
+---
+// Button (w-btn) versi website. Satu CTA primary per section.
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'inverse';
+  size?: 'md' | 'lg';
+  type?: 'button' | 'submit';
+  full?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  full = false,
+  class: cls,
+  ...rest
+} = Astro.props;
+const classes = [
+  'inline-flex items-center justify-center gap-space-2 rounded-md no-underline transition-colors disabled:cursor-not-allowed disabled:opacity-45',
+  size === 'lg' ? 'min-h-12 px-6 text-heading-sm' : 'min-h-11 px-5 text-body-strong',
+  variant === 'primary' &&
+    'bg-primary text-on-primary hover:bg-primary-hover hover:text-on-primary',
+  variant === 'secondary' &&
+    'border border-border-control bg-surface text-ink hover:bg-surface-sunken hover:text-ink',
+  variant === 'inverse' && 'bg-surface text-primary hover:bg-primary-soft hover:text-primary-hover',
+  full && 'w-full',
+  cls,
+];
+---
+
+{href ? (
+  <a href={href} class:list={classes} {...rest}>
+    <slot />
+  </a>
+) : (
+  <button type={type} class:list={classes} {...rest}>
+    <slot />
+  </button>
+)}

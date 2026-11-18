@@ -1,0 +1,90 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/Section.astro';
+import InspirationHero from '~/components/inspiration/InspirationHero.astro';
+import VenueGrid from '~/components/inspiration/VenueGrid.astro';
+import PaletteGrid from '~/components/inspiration/PaletteGrid.astro';
+import PhotoGrid from '~/components/inspiration/PhotoGrid.astro';
+import ConceptGrid from '~/components/inspiration/ConceptGrid.astro';
+import EditorialPolicy from '~/components/inspiration/EditorialPolicy.astro';
+import { getVisible } from '~/lib/content';
+import { categoryHref } from '~/lib/inspiration';
+import { dict } from '~/i18n';
+
+const i = dict.inspiration;
+const [venues, palettes, photos, concepts] = await Promise.all([
+  getVisible('venue'),
+  getVisible('palette'),
+  getVisible('photography'),
+  getVisible('concept'),
+]);
+const sections = [
+  {
+    id: 'venue',
+    title: i.categories.venue,
+    href: categoryHref('venue'),
+    count: venues.length,
+    tone: 'page',
+  },
+  {
+    id: 'palette',
+    title: i.categories.palette,
+    lead: i.paletteLead,
+    href: categoryHref('palette'),
+    count: palettes.length,
+    tone: 'surface',
+  },
+  {
+    id: 'fotografi',
+    title: i.photographyTitle,
+    href: categoryHref('fotografi'),
+    count: photos.length,
+    tone: 'page',
+  },
+  {
+    id: 'konsep',
+    title: i.conceptTitle,
+    href: categoryHref('konsep'),
+    count: concepts.length,
+    tone: 'surface',
+  },
+] as const;
+---
+
+<BaseLayout
+  title={dict.meta.inspirationTitle}
+  description={dict.meta.inspirationDescription}
+  current="inspiration"
+>
+  <InspirationHero title={i.title} lead={i.lead} />
+  {sections.map((s) => (
+    <Section tone={s.tone} labelledby={`${s.id}-title`} class="border-t border-border">
+      <div class="mb-space-5 flex flex-wrap items-end justify-between gap-space-3">
+        <div>
+          <h2 id={`${s.id}-title`} class="text-heading-lg">
+            {s.title}
+          </h2>
+          {'lead' in s && <p class="mt-1 text-body text-ink-muted">{s.lead}</p>}
+        </div>
+        {s.count > 0 && (
+          <a href={s.href} class="text-body-strong">
+            {i.seeAll}
+          </a>
+        )}
+      </div>
+      {s.count === 0 && <p class="text-ink-muted">{i.empty}</p>}
+      {s.id === 'venue' && venues.length > 0 && <VenueGrid venues={venues.slice(0, 4)} />}
+      {s.id === 'palette' && palettes.length > 0 && (
+        <>
+          <PaletteGrid items={palettes.slice(0, 4)} />
+          <p class="mt-space-4 text-caption text-ink-muted">{i.paletteNote}</p>
+        </>
+      )}
+      {s.id === 'fotografi' && photos.length > 0 && <PhotoGrid items={photos.slice(0, 4)} />}
+      {s.id === 'konsep' && concepts.length > 0 && <ConceptGrid items={concepts.slice(0, 4)} />}
+    </Section>
+  ))}
+  <Section compact>
+    <EditorialPolicy />
+  </Section>
+</BaseLayout>

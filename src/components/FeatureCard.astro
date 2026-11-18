@@ -1,0 +1,17 @@
+---
+import PhotoPlaceholder from './PhotoPlaceholder.astro';
+interface Props {
+  name: string;
+  body: string;
+  screenshotLabel: string;
+}
+const { name, body, screenshotLabel } = Astro.props;
+---
+
+<article class="overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
+  <PhotoPlaceholder label={screenshotLabel} ratio="16/9" />
+  <div class="p-space-5">
+    <h3 class="mb-1.5 text-heading-sm">{name}</h3>
+    <p class="text-body text-ink-muted">{body}</p>
+  </div>
+</article>

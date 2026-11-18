@@ -6,7 +6,8 @@ Wedding Organizer (jalur A) dan Journal & Inspirasi wedding untuk calon penganti
 Acuan utama:
 - WPMS-WEB-v0.1 (Website Plan) — scope, sitemap, fase, acceptance checklist
 - WPMS Design System v0.2 — salinan token di `design/tokens.json`, ringkasan di `design/README.md`
-- WPMS-BG-v0.1 (Brand Guideline) dan PRD WPMS v0.4.1
+- WPMS-BG-v0.1 (Brand Guideline) dan PRD WPMS v0.4.7 (18 Nov 2026)
+- Ringkasan sisi aplikasi (landing kit dari prototype): `docs/reference/app-kit/`
 - Kalender konten launch: `docs/content-plan.md`; fase dan prompt: `docs/roadmap.md`
 
 ## Stack (WEB-D02)
@@ -20,7 +21,10 @@ Astro + MDX + Content Collections (skema Zod) + Tailwind CSS. Tema Tailwind diba
 - `champagne` hanya ornamen (garis, ikon dekoratif, hitung mundur), tidak untuk teks atau status.
 - Warna status (success/warning/danger/info) hanya untuk pesan form, bukan dekorasi.
 - Proporsi halaman: ±60% latar terang, 30% primary, 10% champagne.
-- Fraunces untuk display (hero, judul artikel, nama kategori). Plus Jakarta Sans untuk UI dan isi.
+- DM Serif Display (400, satu-satunya ketebalan) untuk display: hero, judul artikel, nama kategori,
+  angka hitung mundur. Hierarki judul diatur lewat ukuran, bukan ketebalan; jangan set font-weight lain
+  (mencegah faux bold). Menggantikan Fraunces; diputuskan Product Owner (PRD RL-193).
+  Plus Jakarta Sans untuk UI dan isi.
   Outfit hanya di logo SVG, jangan dimuat sebagai webfont. JetBrains Mono tidak dipakai di website.
 - Token usulan `display-xl` (48/56) dan `body-lg` (17/28) menunggu OD-WEB-04; definisikan di satu tempat
   (`src/styles/tokens.proposed.css`) agar mudah dihapus bila ditolak.
@@ -30,6 +34,12 @@ Astro + MDX + Content Collections (skema Zod) + Tailwind CSS. Tema Tailwind diba
 - Responsif 360px sampai 1440px, grid 4px, kartu `radius-lg` + `shadow-sm` + border `border`.
 
 ## Aturan konten
+- Copy website berbahasa Indonesia. Bila menyebut atau menampilkan aplikasi (mockup, screenshot, nama fitur),
+  ikuti aplikasi (PRD RL-191): nama modul dan label status dalam Bahasa Inggris, misalnya Payments, Guests,
+  Calendar, Active, Done, In Progress, Attending; tombol dan deskripsi tetap Bahasa Indonesia.
+- Hitung mundur di mockup header Project ditulis `D-87` (FR-DSH-007); di Client Portal "87 hari lagi" (FR-CLP-005).
+- Pilot Release 1: Nora + 1–2 tenant mitra, Q1 2027; go-live komersial akhir Q2 2027 (PRD 5.4, 11.2).
+  Jangan menjanjikan kuota atau tanggal lain.
 - Nama produk ditulis WePromys. Nama, tagline, kontak, sosmed dari `src/config/site.ts`.
 - Semua teks UI dari `src/i18n/id.json`; jangan hardcode string di komponen.
 - Jangan menjanjikan fitur di luar Release 1, fitur AI, marketplace, booking vendor, pricing publik, atau self-signup.

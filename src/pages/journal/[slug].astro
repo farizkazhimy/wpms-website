@@ -1,0 +1,32 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import TableWrap from '~/components/mdx/TableWrap.astro';
+import ArticleLayout from '~/layouts/ArticleLayout.astro';
+import { getVisible } from '~/lib/content';
+
+export const getStaticPaths = (async () => {
+  const articles = await getVisible('journal');
+  const order = (s: string) => (s === 'news' ? 99 : Number(s));
+  return articles.map((entry) => {
+    // Artikel terkait: tahap yang sama atau berikutnya, selain artikel ini.
+    const related = articles
+      .filter((a) => a.id !== entry.id && order(a.data.stage) >= order(entry.data.stage))
+      .sort((a, b) => order(a.data.stage) - order(b.data.stage))
+      .slice(0, 3);
+    // Cadangan: artikel lain bila tahap berikutnya belum ada isinya.
+    for (const a of articles) {
+      if (related.length >= 3) break;
+      if (a.id !== entry.id && !related.includes(a)) related.push(a);
+    }
+    return { params: { slug: entry.id }, props: { entry, related } };
+  });
+}) satisfies GetStaticPaths;
+
+const { entry, related } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+
+<ArticleLayout entry={entry} headings={headings} related={related}>
+  <Content components={{ table: TableWrap }} />
+</ArticleLayout>

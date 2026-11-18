@@ -1,0 +1,223 @@
+---
+import Section from './Section.astro';
+import Container from './Container.astro';
+import Eyebrow from './Eyebrow.astro';
+import StageTimeline from './StageTimeline.astro';
+import ArticleCard from './ArticleCard.astro';
+import Badge from './Badge.astro';
+import PhotoPlaceholder from './PhotoPlaceholder.astro';
+import CTABanner from './CTABanner.astro';
+import { dict, fmt } from '~/i18n';
+import { site } from '~/config/site';
+import { stageLabel, journalHref } from '~/lib/journal';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  articles: CollectionEntry<'journal'>[];
+  activeStage?: string;
+  page?: { currentPage: number; lastPage: number; url: { prev?: string; next?: string } };
+}
+const { articles, activeStage, page } = Astro.props;
+const j = dict.journal;
+const [featured, ...rest] = articles;
+const showingLabel = activeStage
+  ? fmt(j.showing, { label: stageLabel(activeStage as '1') })
+  : j.showingAll;
+const searchText = (a: CollectionEntry<'journal'>) =>
+  `${a.data.title} ${a.data.description} ${a.data.tags.join(' ')}`.toLowerCase();
+---
+
+<section aria-labelledby="journal-hero" class="bg-champagne-soft">
+  <Container class="flex flex-col gap-space-4 pt-14 pb-space-7 md:pt-16">
+    <Eyebrow>{j.eyebrow}</Eyebrow>
+    <h1 id="journal-hero" class="max-w-narrow font-display text-display-lg md:text-display-xl">
+      {j.title}
+    </h1>
+    <p class="max-w-xl text-body-lg text-ink-muted">{j.lead}</p>
+    <form role="search" class="mt-space-2 flex max-w-lg gap-space-2" data-journal-search>
+      <label for="q" class="sr-only">
+        {j.searchLabel}
+      </label>
+      <input
+        id="q"
+        name="q"
+        type="search"
+        placeholder={j.searchPlaceholder}
+        class="min-h-12 min-w-0 flex-1 rounded-md border border-border-control bg-surface px-space-4 text-body text-ink placeholder:text-ink-muted"
+      />
+      <button
+        type="submit"
+        class="min-h-12 rounded-md bg-primary px-space-5 text-body-strong text-on-primary hover:bg-primary-hover"
+      >
+        {j.searchSubmit}
+      </button>
+    </form>
+  </Container>
+</section>
+
+<Section tone="surface" compact labelledby="stages-title" class="border-b border-border">
+  <div class="flex flex-col gap-space-5">
+    <div class="flex flex-wrap items-center justify-between gap-space-3">
+      <h2 id="stages-title" class="text-heading-md">
+        {j.stagesTitle}
+      </h2>
+      {activeStage && (
+        <a href="/journal/" class="text-body-strong">
+          {j.allStages}
+        </a>
+      )}
+    </div>
+    <StageTimeline active={activeStage} />
+  </div>
+</Section>
+
+<Section labelledby="list-title">
+  <div class="flex flex-col gap-space-6">
+    <div class="flex flex-wrap items-center justify-between gap-space-3">
+      <h2 id="list-title" class="sr-only">
+        {showingLabel}
+      </h2>
+      <div role="group" aria-label={j.categoriesLabel} class="flex flex-wrap gap-space-2">
+        {Object.entries(j.categories).map(([key, label], i) => (
+          <button
+            type="button"
+            data-category-filter={key}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+            class="min-h-11 rounded-pill border border-border-control bg-surface px-space-4 text-label font-semibold text-ink aria-pressed:border-primary aria-pressed:bg-primary-soft aria-pressed:text-primary"
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <p class="text-label text-ink-muted" aria-live="polite">
+        {showingLabel}
+      </p>
+    </div>
+
+    {articles.length === 0 && <p class="text-ink-muted">{j.empty}</p>}
+
+    {featured && (
+      <a
+        href={journalHref(featured.id)}
+        data-article
+        data-category={featured.data.category}
+        data-search={searchText(featured)}
+        class="flex flex-wrap overflow-hidden rounded-lg border border-border bg-surface text-ink no-underline shadow-sm hover:text-ink"
+      >
+        <div class="min-h-72 flex-1 basis-lg">
+          <PhotoPlaceholder
+            label={dict.inspiration.photoPlaceholder}
+            ratio="16/10"
+            class="h-full"
+          />
+        </div>
+        <div class="flex flex-1 basis-96 flex-col justify-center gap-space-3 p-space-5 md:p-space-6">
+          <span class="text-caption tracking-[0.08em] text-ink-muted uppercase">{j.featured}</span>
+          <h3 class="font-display text-display-md">{featured.data.title}</h3>
+          <p class="text-body text-ink-muted">{featured.data.description}</p>
+          <div class="flex flex-wrap items-center gap-space-2">
+            <Badge>{stageLabel(featured.data.stage)}</Badge>
+            {featured.data.status === 'review' && <Badge tone="warning">{j.reviewBadge}</Badge>}
+            <span class="text-caption text-ink-muted">
+              {fmt(j.readingTime, { n: featured.data.readingMinutes })}
+            </span>
+          </div>
+        </div>
+      </a>
+    )}
+
+    {rest.length > 0 && (
+      <ul class="grid gap-space-5 md:grid-cols-2 lg:grid-cols-3">
+        {rest.map((a) => (
+          <li data-article data-category={a.data.category} data-search={searchText(a)} class="flex">
+            <ArticleCard
+              href={journalHref(a.id)}
+              title={a.data.title}
+              stageLabel={stageLabel(a.data.stage)}
+              readingMinutes={a.data.readingMinutes}
+              excerpt={a.data.description}
+              status={a.data.status}
+              tone={a.data.stage === 'news' ? 'neutral' : 'brand'}
+            />
+          </li>
+        ))}
+      </ul>
+    )}
+    <p class="text-ink-muted" data-no-result hidden>
+      {j.noResult}
+    </p>
+
+    {page && page.lastPage > 1 && (
+      <nav aria-label={j.pagination} class="flex justify-center gap-space-2">
+        {page.url.prev && (
+          <a
+            href={page.url.prev}
+            class="flex min-h-11 items-center rounded-md border border-border-control bg-surface px-space-4 text-body-strong text-ink no-underline"
+          >
+            {j.prev}
+          </a>
+        )}
+        <span
+          class="flex min-h-11 min-w-11 items-center justify-center rounded-md bg-primary text-body-strong text-on-primary"
+          aria-current="page"
+        >
+          {page.currentPage}
+        </span>
+        {page.url.next && (
+          <a
+            href={page.url.next}
+            class="flex min-h-11 items-center rounded-md border border-border-control bg-surface px-space-4 text-body-strong text-ink no-underline"
+          >
+            {j.next}
+          </a>
+        )}
+      </nav>
+    )}
+  </div>
+</Section>
+
+<Section tone="primary" labelledby="checklist-cta">
+  <CTABanner
+    id="checklist-cta"
+    title={j.checklistTitle}
+    body={j.checklistBody}
+    cta={j.checklistCta}
+    href={`${site.routes.home}#newsletter-title`}
+  />
+</Section>
+
+<script>
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-article]')];
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-category-filter]')];
+  const input = document.querySelector<HTMLInputElement>('#q');
+  const empty = document.querySelector<HTMLElement>('[data-no-result]');
+  let category = 'all';
+  const apply = () => {
+    const q = (input?.value ?? '').trim().toLowerCase();
+    let shown = 0;
+    cards.forEach((c) => {
+      const ok =
+        (category === 'all' || c.dataset.category === category) &&
+        (!q || c.dataset.search!.includes(q));
+      c.hidden = !ok;
+      if (ok) shown++;
+    });
+    if (empty) empty.hidden = shown > 0 || cards.length === 0;
+  };
+  buttons.forEach((b) =>
+    b.addEventListener('click', () => {
+      category = b.dataset.categoryFilter!;
+      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      apply();
+    }),
+  );
+  document.querySelector('[data-journal-search]')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    apply();
+  });
+  const initial = new URLSearchParams(location.search).get('q');
+  if (input && initial) {
+    input.value = initial;
+    apply();
+  }
+</script>

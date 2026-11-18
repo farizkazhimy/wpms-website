@@ -1,0 +1,45 @@
+---
+// Enam tahap persiapan wedding, dipakai sebagai filter Journal.
+import { dict } from '~/i18n';
+interface Props {
+  active?: string;
+  baseHref?: string;
+}
+const { active, baseHref = '/journal' } = Astro.props;
+const stages = ['1', '2', '3', '4', '5', '6'] as const;
+---
+
+<ol class="grid grid-cols-2 gap-space-3 sm:grid-cols-3 lg:grid-cols-6">
+  {stages.map((s) => {
+    const on = s === active;
+    return (
+      <li>
+        <a
+          href={`${baseHref}/tahap/${s}/`}
+          aria-current={on ? 'true' : undefined}
+          class:list={[
+            'flex min-h-28 flex-col gap-1.5 rounded-lg p-space-4 text-ink no-underline hover:text-ink',
+            on ? 'border-2 border-primary bg-primary-soft' : 'border border-border bg-surface',
+          ]}
+        >
+          <span
+            class:list={[
+              'flex size-7 items-center justify-center rounded-pill text-label font-bold',
+              on
+                ? 'bg-primary text-on-primary'
+                : s === '6'
+                  ? 'bg-champagne-soft text-ink'
+                  : 'bg-primary-soft text-primary',
+            ]}
+          >
+            {s}
+          </span>
+          <strong class:list={['text-body-strong', on && 'text-primary']}>
+            {dict.journal.stages[s]}
+          </strong>
+          <span class="text-caption text-ink-muted">{dict.journal.stageRange[s]}</span>
+        </a>
+      </li>
+    );
+  })}
+</ol>

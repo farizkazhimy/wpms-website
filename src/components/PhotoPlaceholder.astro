@@ -1,0 +1,28 @@
+---
+// Placeholder sampai foto berlisensi/berizin tersedia (aturan editorial: kredit wajib).
+interface Props {
+  label: string;
+  ratio?: '16/10' | '4/3' | '21/9' | '4/5' | '1/1' | '16/9';
+  class?: string;
+}
+const { label, ratio = '16/10', class: cls } = Astro.props;
+const text = label.startsWith('[') ? label : `[${label}]`;
+const aspect = {
+  '16/10': 'aspect-[16/10]',
+  '4/3': 'aspect-[4/3]',
+  '21/9': 'aspect-[21/9]',
+  '4/5': 'aspect-[4/5]',
+  '1/1': 'aspect-square',
+  '16/9': 'aspect-video',
+}[ratio];
+---
+
+<div
+  class:list={[
+    'flex items-center justify-center bg-surface-sunken text-caption text-ink-muted',
+    aspect,
+    cls,
+  ]}
+>
+  {text}
+</div>

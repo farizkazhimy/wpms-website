@@ -1,0 +1,30 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Alert from '~/components/Alert.astro';
+import { dict, fmt } from '~/i18n';
+import { site } from '~/config/site';
+
+interface Props {
+  frontmatter: { title: string; description: string; updated: string; draft?: boolean };
+}
+const { title, description, updated, draft = true } = Astro.props.frontmatter;
+---
+
+<BaseLayout title={`${title} | ${site.productName}`} description={description} noindex={draft}>
+  <PageHero
+    eyebrow={site.productName}
+    title={title}
+    lead={fmt(dict.legal.updated, { date: updated })}
+  />
+  <div class="mx-auto max-w-article px-4 py-space-7 md:px-space-5">
+    {draft && (
+      <div class="mb-space-6">
+        <Alert tone="warning">{dict.legal.draftNotice}</Alert>
+      </div>
+    )}
+    <div class="prose">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>

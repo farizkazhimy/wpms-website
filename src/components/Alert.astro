@@ -1,0 +1,28 @@
+---
+// Pesan form. Warna status hanya untuk pesan, bukan dekorasi. Tanpa tanda seru.
+import Icon from './Icon.astro';
+interface Props {
+  tone?: 'info' | 'success' | 'warning' | 'danger';
+  title?: string;
+}
+const { tone = 'info', title } = Astro.props;
+const map = {
+  info: 'bg-info-soft text-info',
+  success: 'bg-success-soft text-success',
+  warning: 'bg-warning-soft text-warning',
+  danger: 'bg-danger-soft text-danger',
+};
+---
+
+<div
+  class:list={['flex gap-space-3 rounded-md px-space-4 py-space-3 text-body', map[tone]]}
+  role={tone === 'danger' ? 'alert' : 'status'}
+>
+  <Icon name="info" />
+  <div>
+    {title && <p class="font-semibold">{title}</p>}
+    <p class="text-ink">
+      <slot />
+    </p>
+  </div>
+</div>

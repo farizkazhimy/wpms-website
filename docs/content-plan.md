@@ -41,3 +41,9 @@ Tren wedding, regulasi venue, update industri. Wajib sumber dan tanggal; review 
 Brief (tim Nora) → `/new-article` atau `/new-vendor` (Claude Code) → `content-reviewer` →
 verifikasi fakta editor Nora → konfirmasi vendor → approval Product Owner → `status: published`.
 Review ulang tiap 6 bulan (`reviewedAt`).
+
+## Status (18 Nov 2026)
+
+- 12 artikel pilar sudah berupa draft lengkap (status `review`), reviewer: Ahmad Fariz Kazhimy (OD-WEB-07).
+- 16 profil Inspirasi berupa kerangka dengan data `[VERIFIKASI]`; menunggu survei, data vendor, dan izin foto tertulis.
+- Untuk terbit: editor memeriksa setiap `[VERIFIKASI]`, mengganti placeholder foto, lalu mengubah `status: published`.

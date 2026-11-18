@@ -1,0 +1,184 @@
+---
+// Styleguide internal (noindex): semua token dan komponen website.
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/Section.astro';
+import Button from '~/components/Button.astro';
+import Badge from '~/components/Badge.astro';
+import Alert from '~/components/Alert.astro';
+import FormField from '~/components/FormField.astro';
+import Tabs from '~/components/Tabs.astro';
+import ArticleCard from '~/components/ArticleCard.astro';
+import VendorCard from '~/components/VendorCard.astro';
+import PaletteSwatch from '~/components/PaletteSwatch.astro';
+import StageTimeline from '~/components/StageTimeline.astro';
+import Breadcrumb from '~/components/Breadcrumb.astro';
+import CategoryCard from '~/components/CategoryCard.astro';
+import { dict } from '~/i18n';
+import tokens from '../../design/tokens.json';
+
+const colors = tokens.color.tokens.filter((t) => !t.name.startsWith('document-'));
+const textStyles = tokens.type.groups.flatMap((g) =>
+  g.styles.map((s) => ({ ...s, family: g.family })),
+);
+const proposed = [
+  { name: 'display-xl', family: 'display', sample: 'Setiap janji, tertepati.' },
+  {
+    name: 'body-lg',
+    family: 'sans',
+    sample: 'Isi artikel panjang memakai 17/28 agar nyaman dibaca.',
+  },
+];
+// Contoh konten styleguide (bukan copy produksi).
+const sample = {
+  palette: [
+    { name: 'Dusty rose', hex: '#D9A5A0' },
+    { name: 'Blush', hex: '#E9C9C1' },
+    { name: 'Ivory', hex: '#F4E7DA' },
+    { name: 'Champagne', hex: '#C9A65A' },
+    { name: 'Mocha', hex: '#7C5A55' },
+  ],
+};
+---
+
+<BaseLayout
+  title={dict.meta.styleguideTitle}
+  description="Styleguide internal website WePromys."
+  noindex
+  mobileCta={false}
+>
+  <Section>
+    <h1 class="mb-space-2 font-display text-display-lg">Styleguide</h1>
+    <p class="text-ink-muted">
+      Dibangkitkan dari design/tokens.json (WPMS Design System). Halaman internal, tidak diindeks.
+    </p>
+  </Section>
+
+  <Section tone="surface" bordered labelledby="sg-color">
+    <h2 id="sg-color" class="mb-space-5 text-heading-lg">
+      Warna
+    </h2>
+    <ul class="grid grid-cols-2 gap-space-4 sm:grid-cols-3 lg:grid-cols-6">
+      {colors.map((c) => (
+        <li class="overflow-hidden rounded-lg border border-border">
+          <div class="h-16" style={`background:var(--color-${c.name})`} />
+          <div class="p-space-3">
+            <p class="text-body-strong">{c.name}</p>
+            <p class="font-mono text-caption text-ink-muted">{c.value}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section labelledby="sg-type">
+    <h2 id="sg-type" class="mb-space-5 text-heading-lg">
+      Tipografi
+    </h2>
+    <ul class="flex flex-col gap-space-4">
+      {[...textStyles, ...proposed].map((s) => (
+        <li class="flex flex-wrap items-baseline gap-space-4 border-b border-border pb-space-3">
+          <code class="w-40 shrink-0 font-mono text-caption text-ink-muted">
+            {s.name}
+            {proposed.some((p) => p.name === s.name) && ' (usulan)'}
+          </code>
+          <span
+            class:list={[
+              `text-${s.name}`,
+              s.family === 'display' && 'font-display',
+              s.family === 'mono' && 'font-mono',
+            ]}
+          >
+            {s.sample}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section tone="surface" bordered labelledby="sg-comp">
+    <h2 id="sg-comp" class="mb-space-5 text-heading-lg">
+      Komponen
+    </h2>
+    <div class="flex flex-col gap-space-6">
+      <div class="flex flex-wrap gap-space-3">
+        <Button size="lg">Ajukan Demo</Button>
+        <Button variant="secondary" size="lg">
+          Lihat Fitur
+        </Button>
+        <Button>Langganan</Button>
+        <Button disabled>Langganan</Button>
+      </div>
+      <div class="flex flex-wrap gap-space-2">
+        <Badge>Tahap 3 · Vendor inti</Badge>
+        <Badge tone="neutral">News</Badge>
+        <Badge tone="outline">Kurasi editorial</Badge>
+        <Badge tone="info">In Progress</Badge>
+        <Badge tone="success">Done</Badge>
+        <Badge tone="warning">Due</Badge>
+        <Badge tone="danger">Overdue</Badge>
+      </div>
+      <Breadcrumb
+        items={[
+          { label: 'Beranda', href: '/' },
+          { label: 'Journal', href: '/journal' },
+          { label: 'Tahap 3' },
+        ]}
+      />
+      <div class="grid gap-space-4 md:grid-cols-2">
+        <FormField
+          id="sg-name"
+          label="Nama WO"
+          required
+          placeholder="Nama usaha"
+          help="Sesuai nama yang dipakai ke Client."
+        />
+        <FormField id="sg-email" label="Email" type="email" error="Format email belum benar." />
+      </div>
+      <div class="grid gap-space-3 md:grid-cols-2">
+        <Alert tone="success" title="Permintaan demo terkirim">
+          Tim kami menghubungi Anda dalam 2 hari kerja.
+        </Alert>
+        <Alert tone="danger" title="Formulir belum lengkap">
+          Isi nama WO dan kontak.
+        </Alert>
+      </div>
+      <Tabs id="sg-tabs" label="Contoh tab" labels={['Leads', 'Project', 'Payments']}>
+        <p slot="panel-0">Panel Leads.</p>
+        <p slot="panel-1">Panel Project.</p>
+        <p slot="panel-2">Panel Payments.</p>
+      </Tabs>
+      <StageTimeline active="3" />
+      <div class="grid gap-space-5 md:grid-cols-3">
+        <ArticleCard
+          href="#"
+          title="Memilih fotografer dan videografer wedding"
+          stageLabel="Tahap 3 · Vendor inti"
+          readingMinutes={7}
+          status="review"
+        />
+        <VendorCard
+          href="#"
+          name="[Nama venue] · Ballroom hotel"
+          meta="[Kota] · 500 sampai 1.000 tamu"
+          price="Rp [X] sampai [Y] juta"
+          priceCheckedAt="dicek Nov 2026"
+          disclosure="editorial"
+        />
+        <PaletteSwatch
+          href="#"
+          name="Dusty rose & champagne"
+          mood="Romantis, resepsi malam indoor."
+          swatches={sample.palette}
+        />
+      </div>
+      <div class="grid max-w-xl grid-cols-2 gap-space-3">
+        <CategoryCard href="#" title="Venue" placeholder="Foto venue" />
+        <CategoryCard
+          href="#"
+          title="Wedding Palette"
+          swatches={sample.palette.map((s) => s.hex)}
+        />
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

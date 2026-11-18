@@ -1,0 +1,26 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import JournalListing from '~/components/JournalListing.astro';
+import { getVisible } from '~/lib/content';
+import { stageLabel } from '~/lib/journal';
+import { dict } from '~/i18n';
+
+export const getStaticPaths = (async () => {
+  const articles = await getVisible('journal');
+  return (['1', '2', '3', '4', '5', '6'] as const).map((stage) => ({
+    params: { stage },
+    props: { stage, articles: articles.filter((a) => a.data.stage === stage) },
+  }));
+}) satisfies GetStaticPaths;
+
+const { stage, articles } = Astro.props;
+---
+
+<BaseLayout
+  title={`${stageLabel(stage)} — ${dict.meta.journalTitle}`}
+  description={dict.meta.journalDescription}
+  current="journal"
+>
+  <JournalListing articles={articles} activeStage={stage} />
+</BaseLayout>

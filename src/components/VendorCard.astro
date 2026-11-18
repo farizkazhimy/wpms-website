@@ -1,0 +1,45 @@
+---
+// Profil kurasi: tanpa rating, tanpa tombol booking (PRD 5.3, bukan marketplace).
+import PhotoPlaceholder from './PhotoPlaceholder.astro';
+import { dict } from '~/i18n';
+interface Props {
+  href: string;
+  name: string;
+  meta: string;
+  price?: string;
+  priceCheckedAt?: string;
+  disclosure: 'editorial' | 'collaboration';
+}
+const { href, name, meta, price, priceCheckedAt, disclosure } = Astro.props;
+---
+
+<a
+  href={href}
+  class="flex w-full flex-col overflow-hidden rounded-lg border border-border bg-surface text-ink no-underline shadow-sm hover:text-ink"
+>
+  <div class="relative">
+    <PhotoPlaceholder label={dict.inspiration.photoPlaceholder} ratio="4/3" />
+    <span
+      class:list={[
+        'absolute top-space-3 left-space-3 rounded-pill px-2.5 py-0.5 text-caption',
+        disclosure === 'collaboration'
+          ? 'bg-primary-soft text-primary'
+          : 'border border-border bg-surface text-ink',
+      ]}
+    >
+      {dict.inspiration.disclosure[disclosure]}
+    </span>
+  </div>
+  <div class="flex flex-col gap-1.5 px-space-5 pt-space-4 pb-space-5">
+    <h3 class="text-heading-sm">{name}</h3>
+    <span class="text-label text-ink-muted">{meta}</span>
+    {price && (
+      <span class="text-body-strong">
+        {price}{' '}
+        {priceCheckedAt && (
+          <span class="text-caption font-normal text-ink-muted">({priceCheckedAt})</span>
+        )}
+      </span>
+    )}
+  </div>
+</a>
