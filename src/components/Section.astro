@@ -1,0 +1,29 @@
+---
+import Container from './Container.astro';
+
+interface Props {
+  tone?: 'page' | 'surface' | 'champagne' | 'primary';
+  bordered?: boolean;
+  width?: 'site' | 'wide' | 'article' | 'narrow';
+  id?: string;
+  labelledby?: string;
+  class?: string;
+}
+const { tone = 'page', bordered = false, width = 'site', id, labelledby, class: cls } = Astro.props;
+const bg = {
+  page: 'bg-surface-page',
+  surface: 'bg-surface',
+  champagne: 'bg-champagne-soft',
+  primary: 'bg-primary text-on-primary',
+}[tone];
+---
+
+<section
+  id={id}
+  aria-labelledby={labelledby}
+  class:list={[bg, bordered && 'border-y border-border', cls]}
+>
+  <Container width={width} class="py-space-7 md:py-section">
+    <slot />
+  </Container>
+</section>

@@ -1,0 +1,117 @@
+---
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import { site } from '~/config/site';
+import { dict } from '~/i18n';
+
+interface Props {
+  current?: 'product' | 'forWo' | 'journal' | 'inspiration' | 'about';
+}
+const { current } = Astro.props;
+const links = [
+  { key: 'product', href: site.routes.product, label: dict.nav.product },
+  { key: 'forWo', href: site.routes.forWo, label: dict.nav.forWo },
+  { key: 'journal', href: site.routes.journal, label: dict.nav.journal },
+  { key: 'inspiration', href: site.routes.inspiration, label: dict.nav.inspiration },
+  { key: 'about', href: site.routes.about, label: dict.nav.about },
+] as const;
+---
+
+<header class="sticky top-0 z-40 border-b border-border bg-surface">
+  <div class="mx-auto flex min-h-header max-w-site items-center gap-space-5 px-4 md:px-space-5">
+    <a href={site.routes.home} aria-label={dict.a11y.home} class="flex shrink-0 items-center">
+      <img
+        src="/brand/wepromys-logo.svg"
+        alt={site.productName}
+        width="146"
+        height="30"
+        class="h-7 w-auto md:h-7.5"
+      />
+    </a>
+
+    <nav aria-label={dict.a11y.mainNav} class="hidden flex-1 lg:block">
+      <ul class="flex gap-1">
+        {links.map((l) => (
+          <li>
+            <a
+              href={l.href}
+              aria-current={current === l.key ? 'page' : undefined}
+              class:list={[
+                'block rounded-md px-space-3 py-space-2 text-body-strong no-underline',
+                current === l.key ? 'bg-primary-soft text-primary' : 'text-ink hover:text-primary',
+              ]}
+            >
+              {l.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="ml-auto hidden items-center gap-space-3 lg:flex">
+      <a href={site.appLoginUrl} class="px-space-2 py-2.5 text-body-strong no-underline">
+        {dict.nav.login}
+      </a>
+      <Button href={site.routes.demo}>{dict.nav.demo}</Button>
+    </div>
+
+    <button
+      type="button"
+      class="ml-auto flex size-11 items-center justify-center rounded-md border border-border bg-surface text-ink lg:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-menu-toggle
+    >
+      <span data-menu-icon="open">
+        <Icon name="menu" label={dict.a11y.openMenu} />
+      </span>
+      <span data-menu-icon="close" hidden>
+        <Icon name="x" label={dict.a11y.closeMenu} />
+      </span>
+    </button>
+  </div>
+
+  <nav
+    id="mobile-menu"
+    aria-label={dict.a11y.mainNav}
+    class="border-t border-border bg-surface lg:hidden"
+    hidden
+  >
+    <ul class="flex flex-col px-4 py-space-3">
+      {links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            aria-current={current === l.key ? 'page' : undefined}
+            class:list={[
+              'block rounded-md px-space-3 py-space-3 text-body-strong no-underline',
+              current === l.key ? 'bg-primary-soft text-primary' : 'text-ink',
+            ]}
+          >
+            {l.label}
+          </a>
+        </li>
+      ))}
+      <li>
+        <a
+          href={site.appLoginUrl}
+          class="block px-space-3 py-space-3 text-body-strong no-underline"
+        >
+          {dict.nav.login}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    if (menu) menu.hidden = open;
+    toggle.querySelector<HTMLElement>('[data-menu-icon="open"]')!.hidden = !open;
+    toggle.querySelector<HTMLElement>('[data-menu-icon="close"]')!.hidden = open;
+  });
+</script>

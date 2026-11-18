@@ -1,0 +1,32 @@
+---
+// Lima swatch; HEX adalah konten editorial, bukan token UI.
+interface Props {
+  href: string;
+  name: string;
+  mood: string;
+  swatches: { hex: string; name: string }[];
+}
+const { href, name, mood, swatches } = Astro.props;
+---
+
+<a
+  href={href}
+  class="flex flex-col overflow-hidden rounded-lg border border-border bg-surface text-ink no-underline hover:text-ink"
+>
+  <div
+    class="grid h-36 grid-cols-[2fr_1fr_1fr_1fr_1fr]"
+    role="img"
+    aria-label={swatches.map((s) => `${s.name} ${s.hex}`).join(', ')}
+  >
+    {swatches.map((s) => (
+      <span style={`background:${s.hex}`} />
+    ))}
+  </div>
+  <div class="flex flex-col gap-1.5 px-space-5 py-space-4">
+    <h3 class="font-display text-heading-lg font-normal">{name}</h3>
+    <span class="font-mono text-caption text-ink-muted">
+      {swatches.map((s) => s.hex).join(' · ')}
+    </span>
+    <span class="text-label text-ink-muted">{mood}</span>
+  </div>
+</a>
