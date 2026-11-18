@@ -1,7 +1,7 @@
 // Audit aksesibilitas (axe-core) pada build produksi, di 1440px dan 360px.
 // Gagal bila ada temuan serious/critical. SCREENSHOT_DIR=... untuk menyimpan tangkapan layar.
 import { createRequire } from 'node:module';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { mkdirSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
@@ -77,6 +77,8 @@ try {
 } finally {
   await browser.close();
   server.kill();
+  // Astro 7 menjalankan preview sebagai daemon; hentikan agar port bebas.
+  spawnSync('npx', ['astro', 'preview', 'stop'], { stdio: 'ignore' });
 }
 if (failures) {
   console.error(`test:a11y gagal: ${failures} temuan serious/critical`);

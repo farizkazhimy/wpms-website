@@ -67,6 +67,7 @@ const selectClass =
                 name="minat"
                 value={o}
                 checked={i === 0}
+                data-interest={i === 0 ? 'demo' : 'pilot'}
                 class="size-5 accent-primary"
               />
               <span>{o}</span>
@@ -92,7 +93,7 @@ const selectClass =
             class="mt-1 size-5 shrink-0 accent-primary"
           />
           <span>
-            {d.consent} <a href={site.routes.privacy}>{dict.legal.privacyTitle}</a>
+            {d.consent} <a href={site.routes.privacy}>{dict.legal.privacyTitle}</a>.
           </span>
         </label>
         <p class="text-caption text-danger" data-form-error hidden>
