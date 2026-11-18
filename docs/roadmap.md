@@ -73,3 +73,7 @@ Konten contoh: 3 artikel + 16 profil Inspirasi berstatus `review` dengan `[VERIF
 
 Catatan desain: di mobile (< 768px) label kategori Inspirasi memakai scrim `ink` 80% karena token
 `overlay` (48%) hanya memberi kontras ±3,4:1 untuk teks 18px. Usulan untuk Design System v0.3.
+
+Halaman tambahan (18 Nov 2026): Produk, Untuk WO, Ajukan Demo (formulir siap, endpoint menunggu OD-WEB-03
+lewat `PUBLIC_DEMO_FORM_ACTION`), Tentang, Kebijakan Editorial, serta kerangka Kebijakan Privasi dan
+Syarat Penggunaan (draf, noindex, menunggu review hukum). OD-WEB-07 diputuskan: editor konten = Product Owner.

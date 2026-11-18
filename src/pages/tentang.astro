@@ -1,0 +1,37 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Section from '~/components/Section.astro';
+import { dict } from '~/i18n';
+const a = dict.about;
+---
+
+<BaseLayout title={dict.meta.aboutTitle} description={dict.meta.aboutDescription} current="about">
+  <PageHero eyebrow={a.eyebrow} title={a.title} />
+  <Section width="article" labelledby="about-body">
+    <h2 id="about-body" class="sr-only">
+      {a.eyebrow}
+    </h2>
+    <div class="flex flex-col gap-space-4 text-body-lg">
+      {a.body.map((p) => (
+        <p>{p}</p>
+      ))}
+    </div>
+  </Section>
+  <Section tone="surface" bordered width="article" labelledby="timeline-title">
+    <h2 id="timeline-title" class="mb-space-5 text-heading-lg">
+      {a.timelineTitle}
+    </h2>
+    <ol class="flex flex-col">
+      {a.timeline.map((t) => (
+        <li class="flex gap-space-5 border-l-2 border-primary pb-space-5 pl-space-5 last:border-champagne last:pb-0">
+          <div class="flex flex-col gap-1">
+            <span class="text-label font-semibold text-primary">{t.when}</span>
+            <span class="text-body-lg">{t.what}</span>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <p class="mt-space-5 text-caption text-ink-muted">{a.timelineNote}</p>
+  </Section>
+</BaseLayout>

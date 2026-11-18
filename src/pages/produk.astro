@@ -1,0 +1,84 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Section from '~/components/Section.astro';
+import Tabs from '~/components/Tabs.astro';
+import Badge from '~/components/Badge.astro';
+import Icon from '~/components/Icon.astro';
+import PhotoPlaceholder from '~/components/PhotoPlaceholder.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import { dict, fmt } from '~/i18n';
+import { site } from '~/config/site';
+const p = dict.product;
+---
+
+<BaseLayout
+  title={dict.meta.productTitle}
+  description={dict.meta.productDescription}
+  current="product"
+>
+  <PageHero eyebrow={p.eyebrow} title={p.title} lead={p.lead} />
+
+  <Section labelledby="modules-title">
+    <h2 id="modules-title" class="sr-only">
+      {p.tabsLabel}
+    </h2>
+    <Tabs id="modules" label={p.tabsLabel} labels={p.modules.map((m) => m.name)}>
+      {p.modules.map((m, i) => (
+        <div slot={`panel-${i}`} class="grid items-center gap-space-6 md:grid-cols-2">
+          <div class="flex flex-col gap-space-4">
+            <h3 class="font-display text-display-md">{m.name}</h3>
+            <p class="text-body-lg text-ink-muted">{m.summary}</p>
+            <ul class="flex flex-col gap-space-3">
+              {m.points.map((pt) => (
+                <li class="flex gap-space-3">
+                  <span class="mt-0.5 text-primary">
+                    <Icon name="check" />
+                  </span>
+                  <span>{pt}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <PhotoPlaceholder
+            label={fmt(dict.home.features.screenshot, { name: m.name })}
+            ratio="4/3"
+            class="rounded-lg border border-border"
+          />
+        </div>
+      ))}
+    </Tabs>
+  </Section>
+
+  <Section tone="surface" bordered labelledby="soon-title">
+    <div class="mb-space-5 flex flex-col gap-1">
+      <h2 id="soon-title" class="text-heading-lg">
+        {p.soonTitle}
+      </h2>
+      <p class="text-ink-muted">{p.soonLead}</p>
+    </div>
+    <ul class="grid gap-space-5 md:grid-cols-3">
+      {p.soon.map((s) => (
+        <li class="flex flex-col gap-space-2 rounded-lg border border-border bg-surface-page p-space-5">
+          <Badge tone="neutral">{p.soonLabel}</Badge>
+          <h3 class="text-heading-sm">{s.name}</h3>
+          <p class="text-body text-ink-muted">{s.body}</p>
+        </li>
+      ))}
+    </ul>
+    <div class="mt-space-6 rounded-lg bg-surface-sunken p-space-5">
+      <h3 class="mb-1 text-body-strong">{p.notIncludedTitle}</h3>
+      <p class="text-body">{p.notIncluded}</p>
+    </div>
+  </Section>
+
+  <Section tone="primary" labelledby="product-cta">
+    <CTABanner
+      id="product-cta"
+      title={p.ctaTitle}
+      body={p.ctaBody}
+      cta={p.cta}
+      href={site.routes.demo}
+    />
+  </Section>
+</BaseLayout>

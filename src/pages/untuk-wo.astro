@@ -1,0 +1,78 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Section from '~/components/Section.astro';
+import Icon from '~/components/Icon.astro';
+import CTABanner from '~/components/CTABanner.astro';
+import { dict } from '~/i18n';
+import { site } from '~/config/site';
+const w = dict.forWo;
+---
+
+<BaseLayout title={dict.meta.forWoTitle} description={dict.meta.forWoDescription} current="forWo">
+  <PageHero eyebrow={w.eyebrow} title={w.title} lead={w.lead} />
+
+  <Section labelledby="roles-title">
+    <h2
+      id="roles-title"
+      class="mb-space-6 text-heading-lg md:font-sans md:text-display-md md:font-bold"
+    >
+      {w.rolesTitle}
+    </h2>
+    <ul class="grid gap-space-5 md:grid-cols-2">
+      {w.roles.map((r) => (
+        <li class="flex flex-col gap-space-3 rounded-lg border border-border bg-surface p-space-5 shadow-sm">
+          <h3 class="font-display text-display-md">{r.name}</h3>
+          <p class="text-body-lg text-ink-muted">{r.need}</p>
+          <ul class="flex flex-col gap-space-2">
+            {r.points.map((pt) => (
+              <li class="flex gap-space-3">
+                <span class="mt-0.5 text-primary">
+                  <Icon name="check" />
+                </span>
+                <span>{pt}</span>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section tone="champagne" labelledby="client-title">
+    <div class="flex max-w-2xl flex-col gap-space-3">
+      <h2 id="client-title" class="font-display text-display-md md:text-display-lg">
+        {w.clientTitle}
+      </h2>
+      <p class="text-body-lg">{w.clientBody}</p>
+    </div>
+  </Section>
+
+  <Section tone="surface" labelledby="why-title">
+    <h2
+      id="why-title"
+      class="mb-space-6 text-heading-lg md:font-sans md:text-display-md md:font-bold"
+    >
+      {w.whyTitle}
+    </h2>
+    <ul class="grid gap-space-5 md:grid-cols-3">
+      {w.why.map((x) => (
+        <li class="flex flex-col gap-space-2 border-t-2 border-primary pt-space-4">
+          <h3 class="text-heading-sm">{x.title}</h3>
+          <p class="text-ink-muted">{x.body}</p>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section tone="primary" labelledby="wo-cta">
+    <CTABanner
+      id="wo-cta"
+      eyebrow={dict.home.pilot.eyebrow}
+      title={dict.home.pilot.title}
+      body={dict.home.pilot.body}
+      cta={dict.home.pilot.cta}
+      href={site.routes.pilot}
+    />
+  </Section>
+</BaseLayout>

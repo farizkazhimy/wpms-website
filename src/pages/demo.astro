@@ -1,0 +1,160 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import Section from '~/components/Section.astro';
+import FormField from '~/components/FormField.astro';
+import Button from '~/components/Button.astro';
+import Alert from '~/components/Alert.astro';
+import { dict } from '~/i18n';
+import { site } from '~/config/site';
+
+// Endpoint formulir menunggu OD-WEB-03; tanpa endpoint, formulir tampil tetapi tidak mengirim.
+const action = import.meta.env.PUBLIC_DEMO_FORM_ACTION ?? '';
+const d = dict.demo;
+const f = d.fields;
+const selectClass =
+  'min-h-11 w-full rounded-md border border-border-control bg-surface px-space-3 text-body text-ink';
+---
+
+<BaseLayout title={dict.meta.demoTitle} description={dict.meta.demoDescription} mobileCta={false}>
+  <PageHero eyebrow={d.eyebrow} title={d.title} lead={d.lead} tone="champagne" />
+
+  <Section labelledby="form-title">
+    <div class="grid items-start gap-space-7 lg:grid-cols-[2fr_1fr]">
+      <form
+        method="post"
+        action={action || undefined}
+        novalidate
+        data-demo-form
+        data-active={action ? 'true' : 'false'}
+        class="flex flex-col gap-space-5 rounded-lg border border-border bg-surface p-space-5 shadow-sm md:p-space-6"
+      >
+        <h2 id="form-title" class="text-heading-lg">
+          {d.formTitle}
+        </h2>
+        {!action && (
+          <Alert tone="warning" title={d.pendingTitle}>
+            {d.pendingBody}
+          </Alert>
+        )}
+        <div class="grid gap-space-4 md:grid-cols-2">
+          <FormField id="nama" label={f.name} required autocomplete="name" />
+          <FormField id="wo" label={f.wo} required autocomplete="organization" />
+          <FormField id="kota" label={f.city} required autocomplete="address-level2" />
+          <div class="flex flex-col gap-1.5">
+            <label for="project" class="text-label">
+              {f.projects}
+              <span class="ml-0.5 text-danger" aria-hidden="true">
+                *
+              </span>
+            </label>
+            <select id="project" name="project" required class={selectClass}>
+              <option value="">—</option>
+              {d.projectsOptions.map((o) => (
+                <option>{o}</option>
+              ))}
+            </select>
+          </div>
+          <FormField id="email" label={f.email} type="email" required autocomplete="email" />
+          <FormField id="wa" label={f.phone} type="tel" required autocomplete="tel" />
+        </div>
+        <fieldset class="flex flex-col gap-space-2">
+          <legend class="mb-1.5 text-label">{f.interest}</legend>
+          {d.interestOptions.map((o, i) => (
+            <label class="flex min-h-11 items-center gap-space-3">
+              <input
+                type="radio"
+                name="minat"
+                value={o}
+                checked={i === 0}
+                class="size-5 accent-primary"
+              />
+              <span>{o}</span>
+            </label>
+          ))}
+        </fieldset>
+        <div class="flex flex-col gap-1.5">
+          <label for="catatan" class="text-label">
+            {f.message}
+          </label>
+          <textarea
+            id="catatan"
+            name="catatan"
+            rows="4"
+            class="rounded-md border border-border-control bg-surface p-space-3 text-body text-ink"
+          ></textarea>
+        </div>
+        <label class="flex items-start gap-space-3 text-body">
+          <input
+            type="checkbox"
+            name="persetujuan"
+            required
+            class="mt-1 size-5 shrink-0 accent-primary"
+          />
+          <span>
+            {d.consent} <a href={site.routes.privacy}>{dict.legal.privacyTitle}</a>
+          </span>
+        </label>
+        <p class="text-caption text-danger" data-form-error hidden>
+          {d.required}
+        </p>
+        <div data-form-success hidden>
+          <Alert tone="success" title={d.successTitle}>
+            {d.successBody}
+          </Alert>
+        </div>
+        <div>
+          <Button type="submit" size="lg" disabled={!action}>
+            {d.submit}
+          </Button>
+        </div>
+      </form>
+
+      <aside aria-labelledby="next-title" class="flex flex-col gap-space-4">
+        <h2 id="next-title" class="text-heading-md">
+          {d.nextTitle}
+        </h2>
+        <ol class="flex flex-col gap-space-4">
+          {d.next.map((n, i) => (
+            <li class="flex gap-space-3">
+              <span class="flex size-7 shrink-0 items-center justify-center rounded-pill bg-primary-soft text-label font-bold text-primary">
+                {i + 1}
+              </span>
+              <span>{n}</span>
+            </li>
+          ))}
+        </ol>
+      </aside>
+    </div>
+  </Section>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-demo-form]');
+  if (new URLSearchParams(location.search).get('jalur') === 'pilot') {
+    form?.querySelector<HTMLInputElement>('[data-interest="pilot"]')?.click();
+  }
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const error = form.querySelector<HTMLElement>('[data-form-error]');
+    if (!form.checkValidity()) {
+      if (error) error.hidden = false;
+      form
+        .querySelectorAll<HTMLInputElement>('input, select')
+        .forEach((el) => el.setAttribute('aria-invalid', String(!el.checkValidity())));
+      form.querySelector<HTMLElement>(':invalid')?.focus();
+      return;
+    }
+    if (error) error.hidden = true;
+    if (form.dataset.active !== 'true') return;
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' },
+    });
+    if (res.ok) {
+      form.querySelector<HTMLElement>('[data-form-success]')!.hidden = false;
+      form.reset();
+    }
+  });
+</script>
