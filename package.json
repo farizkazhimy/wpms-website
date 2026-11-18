@@ -1,0 +1,35 @@
+{
+  "name": "wepromys-website",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "tokens": "node scripts/build-tokens.mjs",
+    "dev": "npm run tokens && astro dev",
+    "build": "npm run tokens && astro build",
+    "preview": "astro preview",
+    "check": "npm run tokens && astro check && node scripts/check-design.mjs",
+    "lint": "prettier --check \"src/**/*.{astro,ts,mjs,css,json}\" \"scripts/**/*.mjs\"",
+    "format": "prettier --write \"src/**/*.{astro,ts,mjs,css,json}\" \"scripts/**/*.mjs\"",
+    "test:a11y": "node scripts/a11y.mjs"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "8.1.2",
+    "@astrojs/sitemap": "3.7.4",
+    "@fontsource-variable/plus-jakarta-sans": "5.3.0",
+    "@fontsource/dm-serif-display": "5.3.0",
+    "@tailwindcss/vite": "4.3.4",
+    "astro": "7.4.5",
+    "tailwindcss": "4.3.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "axe-core": "4.14.0",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.2",
+    "typescript": "6.0.3"
+  }
+}

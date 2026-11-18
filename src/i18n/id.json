@@ -1,0 +1,210 @@
+{
+  "meta": {
+    "homeTitle": "WePromys — Platform manajemen project untuk Wedding Organizer",
+    "homeDescription": "WePromys membantu Wedding Organizer mengelola lead, project, vendor, pembayaran, dan Client Portal dalam satu platform. Plus panduan dan inspirasi pernikahan untuk calon pengantin.",
+    "styleguideTitle": "Styleguide — WePromys Website"
+  },
+  "a11y": {
+    "skipToContent": "Lewati ke konten utama",
+    "mainNav": "Menu utama",
+    "openMenu": "Buka menu",
+    "closeMenu": "Tutup menu",
+    "home": "Beranda WePromys",
+    "breadcrumb": "Breadcrumb",
+    "footerNav": "Tautan footer",
+    "mobileCta": "Aksi utama"
+  },
+  "nav": {
+    "product": "Produk",
+    "forWo": "Untuk WO",
+    "journal": "Journal",
+    "inspiration": "Inspirasi",
+    "about": "Tentang",
+    "login": "Masuk",
+    "demo": "Ajukan Demo"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Wedding Project Management System",
+      "title": "Setiap janji di hari bahagia, tertepati.",
+      "lead": "Platform manajemen project untuk Wedding Organizer. Dari lead pertama sampai hari-H, semua di satu tempat.",
+      "ctaPrimary": "Ajukan Demo",
+      "ctaSecondary": "Lihat Fitur",
+      "note": "Program pilot dibuka Q1 2027 untuk Wedding Organizer terpilih."
+    },
+    "mockup": {
+      "label": "Contoh tampilan Project Workspace WePromys",
+      "caption": "Contoh tampilan aplikasi. Data ilustrasi.",
+      "menu": ["Leads", "Project", "Vendor", "Payments", "Guests"],
+      "activeMenu": "Project",
+      "couple": "Rina & Dimas",
+      "event": "Resepsi · 14 Feb 2027 · 19.00 WIB",
+      "status": "Active",
+      "countdown": "D-87",
+      "countdownLabel": "menuju hari-H",
+      "taskHeader": "Task",
+      "statusHeader": "Status",
+      "tasks": [
+        {
+          "name": "Technical meeting venue",
+          "status": "Done",
+          "tone": "success"
+        },
+        {
+          "name": "Final rundown akad",
+          "status": "In Progress",
+          "tone": "info"
+        },
+        {
+          "name": "Pelunasan dekorasi",
+          "status": "Due",
+          "tone": "warning"
+        }
+      ]
+    },
+    "problems": {
+      "title": "Pekerjaan WO terlalu penting untuk tersebar di chat dan spreadsheet",
+      "lead": "Tiga masalah yang paling sering kami dengar dari tim Wedding Organizer.",
+      "items": [
+        {
+          "icon": "list",
+          "title": "Data tersebar",
+          "body": "Detail Client, vendor, dan rundown ada di banyak file dan grup chat yang berbeda."
+        },
+        {
+          "icon": "clock",
+          "title": "Approval lambat",
+          "body": "Perubahan harga dan jadwal menunggu persetujuan tanpa jejak yang jelas."
+        },
+        {
+          "icon": "wallet",
+          "title": "Pembayaran sulit dipantau",
+          "body": "Termin Client dan pelunasan vendor dicatat manual dan mudah terlewat."
+        }
+      ]
+    },
+    "features": {
+      "title": "Satu platform untuk seluruh project wedding",
+      "lead": "Fitur Release 1 yang tersedia untuk peserta pilot.",
+      "more": "Lihat semua fitur",
+      "items": [
+        {
+          "name": "Leads",
+          "body": "Pantau calon Client dari kontak pertama sampai Deal."
+        },
+        {
+          "name": "Project & Timeline",
+          "body": "Task, checklist, dan due date untuk setiap anggota tim."
+        },
+        {
+          "name": "Vendor",
+          "body": "Data vendor, kontrak, dan jadwal dalam satu daftar."
+        },
+        {
+          "name": "Payments",
+          "body": "Termin Client dan pelunasan vendor dengan status yang jelas."
+        },
+        {
+          "name": "Client Portal",
+          "body": "Pasangan memantau progres dengan brand WO Anda."
+        }
+      ],
+      "screenshot": "Screenshot modul {name}"
+    },
+    "steps": {
+      "title": "Cara kerja",
+      "items": [
+        {
+          "name": "Lead",
+          "body": "Catat calon Client dan jadwalkan meeting."
+        },
+        {
+          "name": "Deal",
+          "body": "Quotation disetujui, kontrak ditandatangani."
+        },
+        {
+          "name": "Project",
+          "body": "Task, vendor, dan pembayaran berjalan di satu workspace."
+        },
+        {
+          "name": "Hari-H",
+          "body": "Rundown final dan tim siap di lokasi."
+        }
+      ]
+    },
+    "pilot": {
+      "eyebrow": "Program Pilot · Q1 2027",
+      "title": "Bangun cara kerja WO Anda bersama kami",
+      "body": "Kuota peserta pilot terbatas. Peserta mendapat pendampingan onboarding dan ikut menentukan prioritas fitur berikutnya.",
+      "cta": "Gabung Pilot"
+    },
+    "journal": {
+      "eyebrow": "Untuk calon pengantin",
+      "title": "Dari Journal",
+      "more": "Semua artikel",
+      "empty": "Artikel pertama sedang disiapkan tim editorial."
+    },
+    "inspiration": {
+      "title": "Inspirasi",
+      "more": "Jelajahi inspirasi"
+    },
+    "newsletter": {
+      "title": "Dapatkan panduan dan checklist terbaru",
+      "lead": "Pilih konten yang paling relevan untuk Anda.",
+      "segmentLegend": "Segmen newsletter",
+      "segments": ["Saya Wedding Organizer", "Saya calon pengantin"],
+      "emailLabel": "Email",
+      "emailPlaceholder": "nama@email.com",
+      "submit": "Langganan",
+      "consent": "Dengan berlangganan, Anda menyetujui Kebijakan Privasi WePromys.",
+      "pending": "Formulir aktif setelah layanan newsletter dipilih (OD-WEB-03)."
+    }
+  },
+  "journal": {
+    "readingTime": "{n} menit baca",
+    "stage": "Tahap {n}",
+    "reviewBadge": "Draft review",
+    "stages": {
+      "1": "Mulai merencanakan",
+      "2": "Venue & tanggal",
+      "3": "Vendor inti",
+      "4": "Detail & tamu",
+      "5": "Menjelang hari-H",
+      "6": "Pasca acara",
+      "news": "News"
+    },
+    "stageRange": {
+      "1": "12 bulan sebelum",
+      "2": "9 sampai 12 bulan",
+      "3": "6 sampai 9 bulan",
+      "4": "3 sampai 6 bulan",
+      "5": "0 sampai 3 bulan",
+      "6": "Setelah pesta"
+    }
+  },
+  "inspiration": {
+    "categories": {
+      "venue": "Venue",
+      "palette": "Wedding Palette",
+      "photography": "Fotografi",
+      "concept": "Konsep"
+    },
+    "disclosure": {
+      "editorial": "Kurasi editorial",
+      "collaboration": "Kolaborasi"
+    },
+    "photoPlaceholder": "Foto berlisensi"
+  },
+  "footer": {
+    "groups": {
+      "product": "Produk",
+      "content": "Konten",
+      "follow": "Ikuti"
+    },
+    "features": "Fitur",
+    "editorialPolicy": "Kebijakan Editorial",
+    "privacy": "Kebijakan Privasi",
+    "terms": "Syarat Penggunaan",
+    "socialPending": "Segera"
+  }
+}
