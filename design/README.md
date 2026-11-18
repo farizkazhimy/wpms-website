@@ -1,6 +1,6 @@
 # WPMS Design System v0.2 — penerapan di website
 
-Sumber: artifact "WPMS Design System" (v0.2, 14 Nov 2026). `tokens.json` di folder ini adalah salinan
+Sumber: artifact "WPMS Design System" (v0.2, 14 Nov 2026; revisi font display 18 Nov 2026). `tokens.json` di folder ini adalah salinan
 apa adanya; jangan diedit manual. Bila Design System berubah, salin ulang lalu jalankan `scripts/build-tokens.mjs`.
 
 Website adalah konteks marketing, jadi intensitas brand lebih tinggi daripada aplikasi internal,
