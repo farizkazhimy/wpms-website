@@ -34,3 +34,13 @@ Halaman `/styleguide` menampilkan semua token dan komponen (noindex).
 - Design system & penerapan: [design/README.md](design/README.md)
 - Roadmap, fase, dan template brief: [docs/roadmap.md](docs/roadmap.md)
 - Rencana konten launch: [docs/content-plan.md](docs/content-plan.md)
+
+## Deploy (Vercel)
+
+1. Vercel → Add New Project → Import `farizkazhimy/wpms-website` (preset Astro terdeteksi; `vercel.json` sudah ada).
+2. Environment Variables:
+   - `PUBLIC_SHOW_REVIEW=true` untuk staging/uji (konten `review` tampil, semua halaman otomatis `noindex`).
+     Produksi: `false`.
+   - `SITE_URL=https://<domain-vercel-atau-final>` (domain final menunggu OD-WEB-01).
+   - `PUBLIC_DEMO_FORM_ACTION` setelah layanan form dipilih (OD-WEB-03).
+3. Setiap push ke `main` men-deploy production; setiap PR mendapat Preview URL.
