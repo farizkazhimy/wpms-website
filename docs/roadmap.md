@@ -58,3 +58,16 @@ src/
 ## Open decisions yang memblokir
 OD-WEB-01 domain, OD-WEB-02 hosting, OD-WEB-07 editor konten (minggu 1); OD-WEB-03 form/newsletter,
 OD-WEB-04 token `display-xl`, `body-lg`, dan 6 komponen baru (minggu 2; font display sudah diputuskan PO lewat RL-193); OD-WEB-05 kebijakan kolaborasi berbayar (minggu 3).
+
+## Status (18 Nov 2026)
+
+| Fase | Status | Catatan |
+| --- | --- | --- |
+| F0 Setup | Selesai | Astro 7.4.5, MDX, Tailwind 4.3.4, Content Collections, CI GitHub Actions |
+| F1 Token & brand | Selesai | Tema dari tokens.json, font self-host, logo, `/styleguide` |
+| F2 Komponen | Selesai | 15 komponen; check-design dan axe lulus |
+| F3 Landing | Home selesai | Halaman Produk, Untuk WO, Ajukan Demo, Tentang menyusul (belum ada mockup) |
+| F4 Template konten | Berikutnya | Journal, Artikel, Inspirasi sesuai mockup 02–04 |
+
+Catatan desain: di mobile (< 768px) label kategori Inspirasi memakai scrim `ink` 80% karena token
+`overlay` (48%) hanya memberi kontras ±3,4:1 untuk teks 18px. Usulan untuk Design System v0.3.
