@@ -1,0 +1,10 @@
+/* Token layout khusus website (bukan token Design System aplikasi). */
+@theme {
+  --container-site: 1200px; /* lebar konten halaman */
+  --container-wide: 1104px; /* artikel + daftar isi */
+  --container-article: 880px; /* header artikel */
+  --container-prose: 68ch; /* isi artikel */
+  --container-narrow: 760px; /* newsletter, judul hero */
+  --spacing-section: 72px; /* jarak vertikal antar section desktop */
+  --spacing-header: 64px;
+}
