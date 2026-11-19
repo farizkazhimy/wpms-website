@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 @import './tokens.generated.css';
-@import './tokens.proposed.css';
 @import './site.css';
 
 /* Font di-host sendiri (fontsource): DM Serif Display 400 untuk display, Plus Jakarta Sans untuk UI. */

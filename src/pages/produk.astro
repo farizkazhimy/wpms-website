@@ -5,7 +5,7 @@ import Section from '~/components/Section.astro';
 import Tabs from '~/components/Tabs.astro';
 import Badge from '~/components/Badge.astro';
 import Icon from '~/components/Icon.astro';
-import PhotoPlaceholder from '~/components/PhotoPlaceholder.astro';
+import Screenshot from '~/components/Screenshot.astro';
 import CTABanner from '~/components/CTABanner.astro';
 import { dict, fmt } from '~/i18n';
 import { site } from '~/config/site';
@@ -40,11 +40,17 @@ const p = dict.product;
               ))}
             </ul>
           </div>
-          <PhotoPlaceholder
-            label={fmt(dict.home.features.screenshot, { name: m.name })}
-            ratio="4/3"
-            class="rounded-lg border border-border"
-          />
+          <figure class="m-0 flex flex-col gap-space-2">
+            <Screenshot
+              name={m.image}
+              alt={fmt(dict.home.features.screenshot, { name: m.name })}
+              ratio="16/10"
+              class="rounded-lg border border-border shadow-md"
+            />
+            <figcaption class="text-caption text-ink-muted">
+              {dict.home.features.screenshotNote}
+            </figcaption>
+          </figure>
         </div>
       ))}
     </Tabs>

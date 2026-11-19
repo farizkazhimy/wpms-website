@@ -5,8 +5,8 @@ export const site = {
   descriptor: 'Wedding Project Management System',
   tagline: 'every promise, delivered',
   owner: 'Nora Wedding Organizer',
-  // URL aplikasi; domain final menunggu OD-WEB-01.
-  appLoginUrl: '#',
+  // URL login aplikasi. Kosong = tombol Masuk disembunyikan sampai aplikasi live (tracker no. 6).
+  appLoginUrl: '',
   routes: {
     home: '/',
     product: '/produk',

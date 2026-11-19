@@ -18,6 +18,13 @@ import { stageLabel, journalHref } from '~/lib/journal';
 
 const h = dict.home;
 const articles = (await getVisible('journal')).slice(0, 3);
+// Kategori tanpa profil terverifikasi diberi label "Segera hadir" (tracker no. 29, 30).
+const categoryCounts = {
+  venue: (await getVisible('venue')).length,
+  palette: (await getVisible('palette')).length,
+  photography: (await getVisible('photography')).length,
+  concept: (await getVisible('concept')).length,
+};
 const photoLabel = {
   venue: 'Foto venue',
   palette: '',
@@ -97,10 +104,12 @@ const photoLabel = {
         <FeatureCard
           name={f.name}
           body={f.body}
-          screenshotLabel={fmt(h.features.screenshot, { name: f.name })}
+          image={f.image}
+          imageAlt={fmt(h.features.screenshot, { name: f.name })}
         />
       ))}
     </div>
+    <p class="mt-space-4 text-caption text-ink-muted">{h.features.screenshotNote}</p>
   </Section>
 
   <!-- Cara kerja -->
@@ -196,6 +205,7 @@ const photoLabel = {
           title={dict.inspiration.categories[c.key]}
           swatches={c.swatches}
           placeholder={photoLabel[c.key]}
+          badge={categoryCounts[c.key] === 0 ? dict.inspiration.comingSoonBadge : undefined}
         />
       ))}
     </div>

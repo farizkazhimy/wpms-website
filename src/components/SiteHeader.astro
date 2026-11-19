@@ -49,9 +49,11 @@ const links = [
     </nav>
 
     <div class="ml-auto hidden items-center gap-space-3 lg:flex">
-      <a href={site.appLoginUrl} class="px-space-2 py-2.5 text-body-strong no-underline">
-        {dict.nav.login}
-      </a>
+      {site.appLoginUrl && (
+        <a href={site.appLoginUrl} class="px-space-2 py-2.5 text-body-strong no-underline">
+          {dict.nav.login}
+        </a>
+      )}
       <Button href={site.routes.demo}>{dict.nav.demo}</Button>
     </div>
 
@@ -92,14 +94,16 @@ const links = [
           </a>
         </li>
       ))}
-      <li>
-        <a
-          href={site.appLoginUrl}
-          class="block px-space-3 py-space-3 text-body-strong no-underline"
-        >
-          {dict.nav.login}
-        </a>
-      </li>
+      {site.appLoginUrl && (
+        <li>
+          <a
+            href={site.appLoginUrl}
+            class="block px-space-3 py-space-3 text-body-strong no-underline"
+          >
+            {dict.nav.login}
+          </a>
+        </li>
+      )}
     </ul>
   </nav>
 </header>
