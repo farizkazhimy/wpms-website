@@ -1,0 +1,24 @@
+---
+// Tangkapan layar prototype aplikasi (data contoh fiktif). public/screenshots/<name>.webp: layar penuh 1440×900;
+// <name>-card.webp: potongan area konten 960×540 untuk kartu kecil.
+interface Props {
+  name: string;
+  alt: string;
+  ratio?: '16/9' | '4/3' | '16/10';
+  eager?: boolean;
+  class?: string;
+}
+const { name, alt, ratio = '16/10', eager = false, class: cls } = Astro.props;
+const isCard = name.endsWith('-card');
+const aspect = { '16/9': 'aspect-video', '4/3': 'aspect-[4/3]', '16/10': 'aspect-[16/10]' }[ratio];
+---
+
+<img
+  src={`/screenshots/${name}.webp`}
+  alt={alt}
+  width={isCard ? 960 : 1440}
+  height={isCard ? 540 : 900}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding="async"
+  class:list={['w-full bg-surface-sunken object-cover object-left-top', aspect, cls]}
+/>

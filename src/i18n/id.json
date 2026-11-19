@@ -8,8 +8,8 @@
     "inspirationTitle": "Inspirasi — Venue, palette, fotografi, dan konsep wedding | WePromys",
     "inspirationDescription": "Kurasi editorial venue, wedding palette, fotografer, dan konsep pernikahan. Setiap profil diberi label kurasi atau kolaborasi, tanpa booking dan tanpa rating.",
     "notFoundTitle": "Halaman tidak ditemukan | WePromys",
-    "productTitle": "Fitur WePromys — Leads, Project, Vendor, Payments, Client Portal",
-    "productDescription": "Fitur Release 1 WePromys untuk Wedding Organizer: Leads dan Quotation, Project dan timeline, vendor, pembayaran Client dan vendor, guest list, dokumen, approval, dan Client Portal.",
+    "productTitle": "Fitur WePromys — Lead, Project, Vendor, Payments, Client Portal",
+    "productDescription": "Fitur Release 1 WePromys untuk Wedding Organizer: Lead dan Quotation, Project dan timeline, vendor, pembayaran Client dan vendor, guest list, dokumen, approval, dan Client Portal.",
     "forWoTitle": "Untuk Wedding Organizer — Manfaat per peran tim | WePromys",
     "forWoDescription": "Bagaimana WePromys membantu Owner, Operational Manager, Wedding Planner, dan Wedding Consultant bekerja dalam satu platform, dengan akses data sesuai peran.",
     "demoTitle": "Ajukan Demo WePromys",
@@ -48,7 +48,7 @@
     "mockup": {
       "label": "Contoh tampilan Project Workspace WePromys",
       "caption": "Contoh tampilan aplikasi. Data ilustrasi.",
-      "menu": ["Leads", "Project", "Vendor", "Payments", "Guests"],
+      "menu": ["Dashboard", "Lead", "Client", "Project", "Vendor"],
       "activeMenu": "Project",
       "couple": "Rina & Dimas",
       "event": "Resepsi · 14 Feb 2027 · 19.00 WIB",
@@ -102,27 +102,33 @@
       "more": "Lihat semua fitur",
       "items": [
         {
-          "name": "Leads",
-          "body": "Pantau calon Client dari kontak pertama sampai Deal."
+          "name": "Lead",
+          "body": "Pantau calon Client dari kontak pertama sampai Deal.",
+          "image": "lead-card"
         },
         {
-          "name": "Project & Timeline",
-          "body": "Task, checklist, dan due date untuk setiap anggota tim."
+          "name": "Timeline & Task",
+          "body": "Task, checklist, dan due date untuk setiap anggota tim.",
+          "image": "timeline-card"
         },
         {
           "name": "Vendor",
-          "body": "Data vendor, kontrak, dan jadwal dalam satu daftar."
+          "body": "Data vendor, kontrak, dan jadwal dalam satu daftar.",
+          "image": "vendor-card"
         },
         {
           "name": "Payments",
-          "body": "Termin Client dan pelunasan vendor dengan status yang jelas."
+          "body": "Termin Client dan pelunasan vendor dengan status yang jelas.",
+          "image": "payments-card"
         },
         {
           "name": "Client Portal",
-          "body": "Pasangan memantau progres dengan brand WO Anda."
+          "body": "Pasangan memantau progres dengan brand WO Anda.",
+          "image": "portal-card"
         }
       ],
-      "screenshot": "Screenshot modul {name}"
+      "screenshot": "Tampilan modul {name} di prototype WePromys, dengan data contoh",
+      "screenshotNote": "Tampilan dari prototype dengan data contoh fiktif."
     },
     "steps": {
       "title": "Cara kerja",
@@ -246,7 +252,7 @@
     "photoPlaceholder": "Foto berlisensi",
     "eyebrow": "Inspirasi",
     "title": "Rekomendasi pilihan untuk hari bahagia Anda",
-    "lead": "Venue, palette, fotografer, dan konsep yang dikurasi tim editorial. Setiap profil diberi label agar Anda tahu mana kurasi murni dan mana kolaborasi.",
+    "lead": "Venue, palette, fotografer, dan konsep yang dikurasi tim editorial, tanpa imbalan dari vendor.",
     "sectionNav": "Kategori inspirasi",
     "seeAll": "Lihat semua",
     "venueFilters": "Filter venue",
@@ -280,7 +286,9 @@
       "dokumenter": "Dokumenter",
       "tradisional": "Tradisional & adat"
     },
-    "listTitle": "Daftar {label}"
+    "listTitle": "Daftar {label}",
+    "comingSoonBody": "Profil di kategori ini terbit setelah data dan izin foto dari vendor diverifikasi tim editorial.",
+    "comingSoonBadge": "Segera hadir"
   },
   "footer": {
     "groups": {
@@ -291,8 +299,7 @@
     "features": "Fitur",
     "editorialPolicy": "Kebijakan Editorial",
     "privacy": "Kebijakan Privasi",
-    "terms": "Syarat Penggunaan",
-    "socialPending": "Segera"
+    "terms": "Syarat Penggunaan"
   },
   "notFound": {
     "title": "Halaman belum tersedia",
@@ -305,44 +312,38 @@
     "lead": "Fitur di bawah ini tersedia untuk peserta pilot Q1 2027. Fitur yang belum masuk Release 1 ditandai jelas.",
     "tabsLabel": "Modul WePromys",
     "soonLabel": "Segera",
-    "soonTitle": "Belum masuk Release 1",
-    "soonLead": "Direncanakan setelah pilot dan bergantung pada hasil evaluasi. Belum ada tanggal pasti.",
+    "soonTitle": "Direncanakan untuk Release 2",
+    "soonLead": "Fitur Finance direncanakan setelah Release 1. Tanggalnya belum ditetapkan.",
     "soon": [
       {
         "name": "Finance",
         "body": "Verifikasi dan lock transaksi, pajak, profit dan margin, approval over-budget (Release 2)."
-      },
-      {
-        "name": "RSVP link dan seating",
-        "body": "Konfirmasi kehadiran lewat tautan dan denah meja visual."
-      },
-      {
-        "name": "Sinkronisasi Google Calendar",
-        "body": "Jadwal meeting dan acara tersinkron ke kalender pribadi."
       }
     ],
     "notIncludedTitle": "Yang tidak kami tawarkan",
     "notIncluded": "WePromys bukan marketplace vendor, tidak memproses pembayaran online, dan tidak terhubung ke WhatsApp API. Tombol WhatsApp hanya membuka chat.",
     "modules": [
       {
-        "name": "Leads",
+        "name": "Lead",
         "summary": "Pipeline calon Client dari kontak pertama sampai Deal.",
         "points": [
           "Pipeline dengan tahap tetap dan probabilitas per tahap",
           "Lead pool yang bisa diklaim Wedding Consultant",
           "Follow-up dan pengingat di My Queue",
           "Quotation berversi dan alasan Lost"
-        ]
+        ],
+        "image": "lead"
       },
       {
-        "name": "Project & Timeline",
+        "name": "Project",
         "summary": "Satu workspace untuk setiap pernikahan.",
         "points": [
           "Event dan Master Event dengan hitung mundur D-n",
           "Template timeline dengan due date relatif terhadap hari-H",
           "Task, checklist, milestone, dan dependency sederhana",
           "Status kesehatan On Track, At Risk, Off Track"
-        ]
+        ],
+        "image": "project"
       },
       {
         "name": "Vendor",
@@ -352,7 +353,8 @@
           "Katalog produk dengan versi harga",
           "Status Booked per Project",
           "Approval vendor baru dan perubahan rekening"
-        ]
+        ],
+        "image": "vendor"
       },
       {
         "name": "Payments",
@@ -362,7 +364,8 @@
           "Status Planned, Due, Partial, Paid, Overdue",
           "Biaya operasional per kategori",
           "Outstanding Client dan vendor per Project"
-        ]
+        ],
+        "image": "payments"
       },
       {
         "name": "Guests & Documents",
@@ -372,17 +375,19 @@
           "RSVP manual dan jumlah pax",
           "Quotation, Invoice, Kuitansi, dan Kontrak PDF",
           "Dokumen berversi dan penanda dibagikan ke Client"
-        ]
+        ],
+        "image": "guests"
       },
       {
-        "name": "Approval & Audit",
+        "name": "Approval & Audit Trail",
         "summary": "Keputusan penting tercatat dan mengikuti hierarki.",
         "points": [
           "Routing approval berdasarkan atasan",
           "Perbandingan nilai lama dan baru",
           "Delegasi approval Owner",
           "Audit Trail untuk perubahan data penting"
-        ]
+        ],
+        "image": "approval"
       },
       {
         "name": "Client Portal",
@@ -392,17 +397,19 @@
           "Jadwal acara dan jadwal pembayaran",
           "Dokumen yang dibagikan",
           "Kontak WP utama, tetap view-only"
-        ]
+        ],
+        "image": "portal"
       },
       {
-        "name": "Dashboard",
+        "name": "Dashboard & Sales Analytics",
         "summary": "Ringkasan kerja per orang dan per bisnis.",
         "points": [
           "My Queue untuk task dan follow-up",
           "Dashboard Owner dengan 5 KPI",
           "Sales Analytics: conversion, sales cycle, forecast",
           "Kalender bulanan dengan peringatan bentrok"
-        ]
+        ],
+        "image": "dashboard"
       }
     ],
     "ctaTitle": "Lihat WePromys bekerja dengan data WO Anda",
@@ -457,8 +464,8 @@
         "body": "Alur kerja disusun dari pengalaman Nora Wedding Organizer menangani Project pernikahan."
       },
       {
-        "title": "Data tersimpan di Indonesia",
-        "body": "Hosting di wilayah Indonesia dan akses data dibatasi sesuai peran."
+        "title": "Hosting di Indonesia",
+        "body": "Aplikasi di-hosting di wilayah Indonesia, dan akses data dibatasi sesuai peran."
       },
       {
         "title": "White-label untuk Client",
@@ -477,7 +484,7 @@
       "city": "Kota",
       "projects": "Jumlah Project per tahun",
       "email": "Email",
-      "phone": "No. WhatsApp",
+      "phone": "No. WhatsApp (opsional)",
       "interest": "Minat",
       "message": "Catatan (opsional)"
     },

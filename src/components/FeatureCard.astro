@@ -1,15 +1,16 @@
 ---
-import PhotoPlaceholder from './PhotoPlaceholder.astro';
+import Screenshot from './Screenshot.astro';
 interface Props {
   name: string;
   body: string;
-  screenshotLabel: string;
+  image: string;
+  imageAlt: string;
 }
-const { name, body, screenshotLabel } = Astro.props;
+const { name, body, image, imageAlt } = Astro.props;
 ---
 
 <article class="overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
-  <PhotoPlaceholder label={screenshotLabel} ratio="16/9" />
+  <Screenshot name={image} alt={imageAlt} ratio="16/9" class="border-b border-border" />
   <div class="p-space-5">
     <h3 class="mb-1.5 text-heading-sm">{name}</h3>
     <p class="text-body text-ink-muted">{body}</p>
