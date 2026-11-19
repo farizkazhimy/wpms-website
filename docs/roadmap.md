@@ -71,8 +71,8 @@ Konten contoh: 3 artikel + 16 profil Inspirasi berstatus `review` dengan `[VERIF
 | F3 Landing | Home selesai | Halaman Produk, Untuk WO, Ajukan Demo, Tentang menyusul (belum ada mockup) |
 | F4 Template konten | Selesai | Journal (indeks, filter tahap `/journal/tahap/N/`, kategori, pencarian klien, pagination 12), Artikel (TOC, blok Untuk WO, terkait), Inspirasi (indeks, 4 kategori, profil), 404 |
 
-Catatan desain: di mobile (< 768px) label kategori Inspirasi memakai scrim `ink` 80% karena token
-`overlay` (48%) hanya memberi kontras ±3,4:1 untuk teks 18px. Usulan untuk Design System v0.3.
+Catatan desain: label teks kecil di atas foto memakai token `overlay-strong` (80%), resmi di Design System v0.3;
+`overlay` (48%) hanya untuk teks besar.
 
 Halaman tambahan (18 Nov 2026): Produk, Untuk WO, Ajukan Demo (formulir siap, endpoint menunggu OD-WEB-03
 lewat `PUBLIC_DEMO_FORM_ACTION`), Tentang, Kebijakan Editorial, serta kerangka Kebijakan Privasi dan

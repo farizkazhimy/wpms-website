@@ -20,14 +20,6 @@ const colors = tokens.color.tokens.filter((t) => !t.name.startsWith('document-')
 const textStyles = tokens.type.groups.flatMap((g) =>
   g.styles.map((s) => ({ ...s, family: g.family })),
 );
-const proposed = [
-  { name: 'display-xl', family: 'display', sample: 'Setiap janji, tertepati.' },
-  {
-    name: 'body-lg',
-    family: 'sans',
-    sample: 'Isi artikel panjang memakai 17/28 agar nyaman dibaca.',
-  },
-];
 // Contoh konten styleguide (bukan copy produksi).
 const sample = {
   palette: [
@@ -75,12 +67,9 @@ const sample = {
       Tipografi
     </h2>
     <ul class="flex flex-col gap-space-4">
-      {[...textStyles, ...proposed].map((s) => (
+      {textStyles.map((s) => (
         <li class="flex flex-wrap items-baseline gap-space-4 border-b border-border pb-space-3">
-          <code class="w-40 shrink-0 font-mono text-caption text-ink-muted">
-            {s.name}
-            {proposed.some((p) => p.name === s.name) && ' (usulan)'}
-          </code>
+          <code class="w-40 shrink-0 font-mono text-caption text-ink-muted">{s.name}</code>
           <span
             class:list={[
               `text-${s.name}`,

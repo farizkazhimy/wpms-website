@@ -6,8 +6,9 @@ interface Props {
   placeholder?: string;
   swatches?: string[];
   compact?: boolean;
+  badge?: string;
 }
-const { href, title, placeholder, swatches, compact = false } = Astro.props;
+const { href, title, placeholder, swatches, compact = false, badge } = Astro.props;
 ---
 
 <a
@@ -18,6 +19,11 @@ const { href, title, placeholder, swatches, compact = false } = Astro.props;
     swatches ? 'bg-champagne-soft' : 'bg-surface-sunken',
   ]}
 >
+  {badge && (
+    <span class="absolute top-space-3 right-space-3 z-10 rounded-pill bg-surface px-2.5 py-0.5 text-caption text-ink">
+      {badge}
+    </span>
+  )}
   {swatches ? (
     <span class="grid flex-1 grid-cols-5" aria-hidden="true">
       {swatches.map((hex) => (
@@ -31,7 +37,7 @@ const { href, title, placeholder, swatches, compact = false } = Astro.props;
   )}
   <span
     class:list={[
-      'bg-ink/80 font-display text-on-primary md:bg-overlay',
+      'bg-overlay-strong font-display text-on-primary md:bg-overlay',
       swatches ? '' : 'absolute inset-x-0 bottom-0',
       compact
         ? 'p-space-3 text-heading-md font-normal'

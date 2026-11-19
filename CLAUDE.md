@@ -5,7 +5,7 @@ Wedding Organizer (jalur A) dan Journal & Inspirasi wedding untuk calon penganti
 
 Acuan utama:
 - WPMS-WEB-v0.1 (Website Plan) — scope, sitemap, fase, acceptance checklist
-- WPMS Design System v0.2 — salinan token di `design/tokens.json`, ringkasan di `design/README.md`
+- WPMS Design System v0.3 — salinan token di `design/tokens.json`, ringkasan di `design/README.md`
 - WPMS-BG-v0.1 (Brand Guideline) dan PRD WPMS v0.4.7 (18 Nov 2026)
 - Ringkasan sisi aplikasi (landing kit dari prototype): `docs/reference/app-kit/`
 - Kalender konten launch: `docs/content-plan.md`; fase dan prompt: `docs/roadmap.md`
@@ -26,8 +26,8 @@ Astro + MDX + Content Collections (skema Zod) + Tailwind CSS. Tema Tailwind diba
   (mencegah faux bold). Menggantikan Fraunces; diputuskan Product Owner (PRD RL-193).
   Plus Jakarta Sans untuk UI dan isi.
   Outfit hanya di logo SVG, jangan dimuat sebagai webfont. JetBrains Mono tidak dipakai di website.
-- Token usulan `display-xl` (48/56) dan `body-lg` (17/28) menunggu OD-WEB-04; definisikan di satu tempat
-  (`src/styles/tokens.proposed.css`) agar mudah dihapus bila ditolak.
+- Token `display-xl` (48/56, hero website) dan `body-lg` (17/28, isi artikel) serta `overlay-strong` (scrim teks kecil
+  di atas foto) sudah resmi di WPMS Design System v0.3 (OD-WEB-04 disetujui).
 - Ikon Lucide stroke 1.75, ukuran 16/20/24. Tanpa emoji. Tanpa tanda seru di UI.
 - Fokus: outline 2px `primary-bright`, offset 2px, pada semua elemen interaktif.
 - Logo dari `public/brand/`; descriptor dan tagline tidak tampil bersamaan; clear space setinggi cincin.
