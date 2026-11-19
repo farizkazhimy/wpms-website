@@ -8,6 +8,7 @@ import PaletteGrid from '~/components/inspiration/PaletteGrid.astro';
 import PhotoGrid from '~/components/inspiration/PhotoGrid.astro';
 import ConceptGrid from '~/components/inspiration/ConceptGrid.astro';
 import EditorialPolicy from '~/components/inspiration/EditorialPolicy.astro';
+import ComingSoon from '~/components/inspiration/ComingSoon.astro';
 import { getVisible } from '~/lib/content';
 import { categories } from '~/lib/inspiration';
 import { dict, fmt } from '~/i18n';
@@ -38,7 +39,7 @@ const count = venues.length + palettes.length + photos.length + concepts.length;
     <h2 id="list-title" class="sr-only">
       {fmt(i.listTitle, { label: cat.label })}
     </h2>
-    {count === 0 && <p class="text-ink-muted">{i.empty}</p>}
+    {count === 0 && <ComingSoon />}
     {venues.length > 0 && <VenueGrid venues={venues} />}
     {palettes.length > 0 && (
       <>

@@ -1,0 +1,11 @@
+---
+// Kategori yang belum punya profil terverifikasi (tracker no. 29, 30).
+import Badge from '../Badge.astro';
+import { dict } from '~/i18n';
+const i = dict.inspiration;
+---
+
+<div class="flex flex-col items-start gap-space-2 rounded-lg border border-dashed border-border-control bg-surface p-space-5">
+  <Badge tone="neutral">{i.comingSoonBadge}</Badge>
+  <p class="text-body text-ink-muted">{i.comingSoonBody}</p>
+</div>

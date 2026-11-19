@@ -7,6 +7,7 @@ import PaletteGrid from '~/components/inspiration/PaletteGrid.astro';
 import PhotoGrid from '~/components/inspiration/PhotoGrid.astro';
 import ConceptGrid from '~/components/inspiration/ConceptGrid.astro';
 import EditorialPolicy from '~/components/inspiration/EditorialPolicy.astro';
+import ComingSoon from '~/components/inspiration/ComingSoon.astro';
 import { getVisible } from '~/lib/content';
 import { categoryHref } from '~/lib/inspiration';
 import { dict } from '~/i18n';
@@ -72,7 +73,7 @@ const sections = [
           </a>
         )}
       </div>
-      {s.count === 0 && <p class="text-ink-muted">{i.empty}</p>}
+      {s.count === 0 && <ComingSoon />}
       {s.id === 'venue' && venues.length > 0 && <VenueGrid venues={venues.slice(0, 4)} />}
       {s.id === 'palette' && palettes.length > 0 && (
         <>
