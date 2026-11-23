@@ -5,6 +5,7 @@ import Section from '~/components/Section.astro';
 import FormField from '~/components/FormField.astro';
 import Button from '~/components/Button.astro';
 import Alert from '~/components/Alert.astro';
+import Honeypot from '~/components/Honeypot.astro';
 import { dict } from '~/i18n';
 import { site } from '~/config/site';
 
@@ -27,11 +28,14 @@ const selectClass =
         novalidate
         data-demo-form
         data-active={action ? 'true' : 'false'}
+        data-sending={d.sending}
         class="flex flex-col gap-space-5 rounded-lg border border-border bg-surface p-space-5 shadow-sm md:p-space-6"
       >
         <h2 id="form-title" class="text-heading-lg">
           {d.formTitle}
         </h2>
+        <input type="hidden" name="jenis" value="demo" />
+        <Honeypot />
         {!action && (
           <Alert tone="warning" title={d.pendingTitle}>
             {d.pendingBody}
@@ -99,6 +103,11 @@ const selectClass =
         <p class="text-caption text-danger" data-form-error hidden>
           {d.required}
         </p>
+        <div data-form-failure hidden>
+          <Alert tone="danger" title={d.errorTitle}>
+            {d.errorBody}
+          </Alert>
+        </div>
         <div data-form-success hidden>
           <Alert tone="success" title={d.successTitle}>
             {d.successBody}
@@ -131,6 +140,8 @@ const selectClass =
 </BaseLayout>
 
 <script>
+  import { submitForm } from '~/scripts/submit-form';
+
   const form = document.querySelector<HTMLFormElement>('[data-demo-form]');
   if (new URLSearchParams(location.search).get('jalur') === 'pilot') {
     form?.querySelector<HTMLInputElement>('[data-interest="pilot"]')?.click();
@@ -138,6 +149,9 @@ const selectClass =
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const error = form.querySelector<HTMLElement>('[data-form-error]');
+    const success = form.querySelector<HTMLElement>('[data-form-success]');
+    const failure = form.querySelector<HTMLElement>('[data-form-failure]');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     if (!form.checkValidity()) {
       if (error) error.hidden = false;
       form
@@ -147,15 +161,21 @@ const selectClass =
       return;
     }
     if (error) error.hidden = true;
-    if (form.dataset.active !== 'true') return;
-    const res = await fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { Accept: 'application/json' },
-    });
-    if (res.ok) {
-      form.querySelector<HTMLElement>('[data-form-success]')!.hidden = false;
+    if (form.dataset.active !== 'true' || !button) return;
+    const label = button.textContent;
+    button.disabled = true;
+    button.textContent = form.dataset.sending ?? label;
+    if (success) success.hidden = true;
+    if (failure) failure.hidden = true;
+    const result = await submitForm(form, form.action);
+    button.disabled = false;
+    button.textContent = label;
+    if (result.ok) {
+      if (success) success.hidden = false;
       form.reset();
+      success?.scrollIntoView({ block: 'nearest' });
+    } else if (failure) {
+      failure.hidden = false;
     }
   });
 </script>

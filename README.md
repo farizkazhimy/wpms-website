@@ -42,5 +42,7 @@ Halaman `/styleguide` menampilkan semua token dan komponen (noindex).
    - `PUBLIC_SHOW_REVIEW=true` untuk staging/uji (konten `review` tampil, semua halaman otomatis `noindex`).
      Produksi: `false`.
    - `SITE_URL=https://<domain-vercel-atau-final>` (domain final menunggu OD-WEB-01).
-   - `PUBLIC_DEMO_FORM_ACTION` setelah layanan form dipilih (OD-WEB-03).
+   - `PUBLIC_DEMO_FORM_ACTION`: URL web app Google Apps Script untuk form demo dan newsletter.
+     Setup: [integrations/google-apps-script/README.md](integrations/google-apps-script/README.md).
+     Isi setelah Kebijakan Privasi final.
 3. Setiap push ke `main` men-deploy production; setiap PR mendapat Preview URL.
