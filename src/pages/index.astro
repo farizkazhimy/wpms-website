@@ -14,9 +14,12 @@ import { site } from '~/config/site';
 import { dict, fmt } from '~/i18n';
 import { getVisible } from '~/lib/content';
 import { inspirationCategories } from '~/data/inspiration';
+import Honeypot from '~/components/Honeypot.astro';
 import { stageLabel, journalHref } from '~/lib/journal';
 
 const h = dict.home;
+// Endpoint formulir (Google Apps Script). Kosong = newsletter tampil tetapi belum mengirim (OD-WEB-03).
+const formEndpoint = import.meta.env.PUBLIC_DEMO_FORM_ACTION ?? '';
 const articles = (await getVisible('journal')).slice(0, 3);
 // Kategori tanpa profil terverifikasi diberi label "Segera hadir" (tracker no. 29, 30).
 const categoryCounts = {
@@ -226,7 +229,20 @@ const photoLabel = {
         {h.newsletter.title}
       </h2>
       <p class="text-ink-muted">{h.newsletter.lead}</p>
-      <form class="flex w-full max-w-lg flex-col gap-space-4 text-left" data-newsletter>
+      <form
+        class="flex w-full max-w-lg flex-col gap-space-4 text-left"
+        data-newsletter
+        data-endpoint={formEndpoint}
+        data-sending={h.newsletter.sending}
+        novalidate
+      >
+        <input type="hidden" name="jenis" value="newsletter" />
+        <input
+          type="hidden"
+          name="persetujuan"
+          value="Setuju dengan Kebijakan Privasi (teks di bawah form)"
+        />
+        <Honeypot />
         <fieldset class="flex flex-wrap justify-center gap-space-2">
           <legend class="sr-only">{h.newsletter.segmentLegend}</legend>
           {h.newsletter.segments.map((s, i) => (
@@ -254,19 +270,72 @@ const photoLabel = {
               name="email"
               type="email"
               autocomplete="email"
+              required
               placeholder={h.newsletter.emailPlaceholder}
               class="min-h-11 rounded-md border border-border-control bg-surface px-space-3 text-body text-ink placeholder:text-ink-muted"
             />
           </div>
-          <Button type="submit" disabled aria-describedby="nl-pending">
+          <Button
+            type="submit"
+            disabled={!formEndpoint}
+            aria-describedby={formEndpoint ? undefined : 'nl-pending'}
+          >
             {h.newsletter.submit}
           </Button>
         </div>
         <p class="text-caption text-ink-muted">{h.newsletter.consent}</p>
-        <p id="nl-pending" class="text-caption text-ink-muted">
-          {h.newsletter.pending}
+        {!formEndpoint && (
+          <p id="nl-pending" class="text-caption text-ink-muted">
+            {h.newsletter.pending}
+          </p>
+        )}
+        <p class="text-body-strong text-success" data-nl-message="success" role="status" hidden>
+          {h.newsletter.success}
+        </p>
+        <p class="text-body-strong text-danger" data-nl-message="error" role="alert" hidden>
+          {h.newsletter.error}
+        </p>
+        <p class="text-body-strong text-danger" data-nl-message="invalid" role="alert" hidden>
+          {h.newsletter.invalid}
         </p>
       </form>
     </div>
   </Section>
 </BaseLayout>
+
+<script>
+  import { submitForm } from '~/scripts/submit-form';
+
+  const nl = document.querySelector<HTMLFormElement>('[data-newsletter]');
+  nl?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const endpoint = nl.dataset.endpoint;
+    const button = nl.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const show = (key: string | null) =>
+      nl
+        .querySelectorAll<HTMLElement>('[data-nl-message]')
+        .forEach((m) => (m.hidden = m.dataset.nlMessage !== key));
+    if (!endpoint || !button) return;
+    const email = nl.querySelector<HTMLInputElement>('input[name="email"]');
+    if (email && !email.checkValidity()) {
+      email.setAttribute('aria-invalid', 'true');
+      email.focus();
+      show('invalid');
+      return;
+    }
+    email?.removeAttribute('aria-invalid');
+    const label = button.textContent;
+    button.disabled = true;
+    button.textContent = nl.dataset.sending ?? label;
+    show(null);
+    const result = await submitForm(nl, endpoint);
+    button.disabled = false;
+    button.textContent = label;
+    if (result.ok) {
+      nl.reset();
+      show('success');
+    } else {
+      show('error');
+    }
+  });
+</script>

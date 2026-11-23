@@ -176,7 +176,11 @@
       "emailPlaceholder": "nama@email.com",
       "submit": "Langganan",
       "consent": "Dengan berlangganan, Anda menyetujui Kebijakan Privasi WePromys.",
-      "pending": "Formulir aktif setelah layanan newsletter dipilih (OD-WEB-03)."
+      "pending": "Formulir aktif setelah layanan newsletter dipilih (OD-WEB-03).",
+      "sending": "Mengirim…",
+      "success": "Terima kasih, email Anda sudah terdaftar.",
+      "error": "Pendaftaran belum berhasil. Coba lagi beberapa saat lagi.",
+      "invalid": "Masukkan alamat email yang benar."
     }
   },
   "journal": {
@@ -503,7 +507,10 @@
       "Tim kami menghubungi Anda untuk menyepakati jadwal.",
       "Sesi demo 45 menit memakai contoh Project pernikahan.",
       "Bila cocok, kita bahas kebutuhan dan jadwal pilot."
-    ]
+    ],
+    "sending": "Mengirim…",
+    "errorTitle": "Permintaan belum terkirim",
+    "errorBody": "Periksa koneksi lalu coba lagi. Bila masih gagal, hubungi kami melalui WhatsApp atau email."
   },
   "about": {
     "eyebrow": "Tentang",
